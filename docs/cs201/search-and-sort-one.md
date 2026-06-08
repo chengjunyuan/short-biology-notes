@@ -2,7 +2,7 @@
 layout: default
 title: Searching and Sorting I
 parent: Data Structures and Algorithms I
-nav_order: 1
+nav_order: 2
 ---
 
 # Searching and Sorting I
