@@ -9,14 +9,14 @@ nav_order: 2
 We consider the following motivating example for this entire section. Alice is a marine biologist who has harvested a large number of waterborne bacteria and sequenced their DNA. She has obtained one billion (1,000,000,000) unique 30 bp DNA sequences. Alice would like to publish the data she has collected as a public database for other scientists to use, so that they can search for their sequences of interest. How can Alice best store her data?
 
 ## Storing the Data 'as-is' is Inefficient
-The simplest option for Alice is store the data 'as-is'. That is, she just needs to upload her gigantic `.fasta` file and let the other scientists search for their sequences on their own. Unfortunately, this is really slow. In fact, the average number of sequences checked will be 
+The simplest option for Alice is store the data 'as-is'. That is, she just needs to upload her gigantic `.fasta` file and let the other scientists search for their sequences on their own. Unfortunately, this is really slow. Given a target DNA sequence, we'll just have to go through the list and check every element. On average, we'll have to check 500,000,000 sequences before we find our target sequence. When we consider the possibility that our target DNA sequence isn't in the database, the average number of sequences checked per query gets even worse! We therefore need a faster method of searching our database.
 
 ## Binary Search
-We hereby introduce our first algorithm: **binary search**. To describe any algorithm, we need the following: the algorithm's input, the algorithm's output, how it works (i.e., the algorithm itself), and the algorithm's performance (how it scales with respect to input size).
+We claim that if our database is *sorted*, we can search it much faster using an algorithm known as **binary search**. Briefly speaking, the binary search algorithm depends on the database being sorted in order to search the database quickly. To properly describe binary search (and every algorithm subsequently introduced), we need the following: the algorithm's input, the algorithm's output, how it works (i.e., the algorithm itself), and the algorithm's performance (how it scales with respect to input size).
 
 - Input(s): A sorted list *ls* and a value *v* to search.
 - Output: A boolean value (True if *v* is in *S* and False otherwise)
-- Time Complexity: *O(logn)*
+- Time Complexity: *O(logn)* (the derivation is nontrivial and not important - for now, the rule of thumb is that algorithms which halve the search space will have a *logn* term present)
 - Space Complexity: *O(1)*
 
 Let's first examine the intuition behind the algorithm.
@@ -56,6 +56,16 @@ To better understand the Python implementation of the algorithm, we can consider
 5. The value of `ls[mid]` is now `ls[2]=2`. Since `2<3`, the `elif` block gets executed and we set `low=3`.
 6. The `while` loop repeats, and now `mid=3`, using the new value of `low` from Step 5.
 7. The value of `ls[mid]` is `ls[3]=3`. Since `3=3`, the `if` block gets executed and the function returns `True`. This means that *v=3* is an element of *ls*.
+
+#### Example 2: *ls*=[0,1,2,3,4,5,6,7,8,9,10], *v=-1*
+1. We start by setting `low=0` and `high=10`.
+2. We enter the `while` loop next, and first set `mid=5` using the value of `low` and `high` given in Step 1.
+3. The value of `ls[mid]` is `ls[5]=5`. Since `5>1`, the `else` block gets executed and we set `high=4`.
+4. The `while` loop repeats, and now `mid=2`, using the new value of `high` from Step 3.
+5. The value of `ls[mid]` is now `ls[2]=2`. Since `2>-1`, the `else` block gets executed and we set `high=1`.
+6. The `while` loop repeats, and now `mid=0`, using the new value of `high` from Step 5.
+7. The value of `ls[mid]` is now `ls[0]=0`. Since `0>-1`, the `else` block gets executed and we set `high=-1`.
+8. Since `low>high`, the `while` loop is broken and we return `False`. This means that *v=-1* is not an element of *ls*.
 
 ### A Minor Extension
 Our current algorithm only returns a True or False value depending on whether our value *v* is in the input list *ls*. We can slightly improve the algorithm to return the index of *v* if it is in *ls*, and to return some other default value otherwise. By convention, the default value is -1. That is, if *v* is not in *ls*, our `binary_search` function should return -1. Here is the modified implementation: the only lines changed are the two `return` statements.
