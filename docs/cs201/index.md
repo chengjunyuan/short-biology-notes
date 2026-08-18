@@ -1,18 +1,33 @@
 ---
 layout: default
-title: Data Structures and Algorithms I
-nav_order: 2
+title: CS201 Data Structures & Algorithms I
+nav_order: 4
 has_children: true
 ---
 
-# Data Structures and Algorithms I
-Welcome to Data Structures and Algorithms I! Data Structures and Algorithms (or DSA for short) is the bread and butter of most techniques papers in bioinformatics. Modern DNA sequencing techniques produce huge volumes of sequence data. Although modern computers are increasingly capable, it is still important to develop efficient algorithms to handle large amounts of genomic data.
+# CS201: Data Structures & Algorithms I
 
-Data Structures and Algorithms I aims to provide coverage of the following topics:
-- Searching and Sorting (algorithms). A common operation with large datasets is to check whether the dataset contains a particular element. For example, we might want to know whether a specific sequence like "ATTTAGGCAATG" is present within a set of sequencing data that we have. This section covers some essential sorting algorithms (selection sort, insertion sort, merge sort, and quick sort) and a basic search algorithm (binary search).
-- Trees (data structures). After learning how to sort our large datasets, we introduce a data structure called a 'tree' which can efficiently store our data. This section covers binary search trees, AVL trees, tries, and augmented trees (order statistics and interval trees). We also see how trees can support other data structures such as priority queues and heaps.
-- Hashing and Sets (algorithms, data structures). Hashing provides an elegant mathematical solution to some of the problems discussed in the previous section. The most common hashmap today is the dictionary data type in Python. This section covers hash tables, hash collisions, resizing, Bloom filters, and set operations.
-- Graphs (algorithms, data structures). Everyone loves graphs! They're intuitive, fun to draw, and also come packed with tons of fun problems. This section covers graph representations, graph search algorithms (breadth-first search, depth-first search, Bellman-Ford and Dijkstra's), spanning trees (Kruskal's and Prim's), bipartite graphs, directed acyclic graphs (DAGs), and topological sort.
-- Dynamic Programming (algorithms). The final topic of Data Structures and Algorithms I is dynamic programming (DP), the core principle that motivates the Smith-Waterman and Needleman-Wunsch algorithms for sequence alignment. Unlike the previous topics, DP isn't a specific algorithm or data structure to be studied; DP is a way of thinking about how to solve problems. DP is a *style* of algorithm design, and we therefore see DP-style algorithms applied to trees, hashing, and graph problems.
+Welcome to **CS201: Data Structures & Algorithms I**!
 
-In short, Data Structures and Algorithms I aims to cover the most commonly used data structures and algorithms, therefore providing a firm foundation for future studies of more advanced data structures and algorithms.
+High-throughput DNA sequencing generates billions of short nucleotide reads in a single instrument run. While raw compute power continues to scale, algorithmic efficiency is the difference between a pipeline taking 30 minutes vs. 30 days.
+
+Data Structures and Algorithms (DSA) is the foundation of computational biology. This course is modeled on classical rigorous algorithms curricula (such as NUS CS2040S), with every concept motivated by the **computational demands of biological data processing**.
+
+---
+
+## Course Modules
+
+1. [**Algorithm Analysis & Asymptotic Complexity**](algorithm-analysis.md)
+   * *Rationale*: How to rigorously predict execution time and memory scaling as genome size or sequencing depth grows ($O$, $\Omega$, $\Theta$).
+2. [**Searching & Sorting Algorithms**](searching-and-sorting.md)
+   * *Rationale*: Why sorting unlocks logarithmic $O(\log N)$ search, when to use comparison sorts (Merge/Quick) vs. linear-time non-comparison sorts (Radix Sort on fixed-length reads).
+3. [**Linear Structures, Heaps & Priority Queues**](linear-structures-and-heaps.md)
+   * *Rationale*: Dynamic arrays vs. linked lists (cache locality vs. pointer chasing), and using min/max heaps for streaming $k$-way merges of massive coordinate-sorted BAM files.
+4. [**Trees, Balanced BSTs, Tries & Disjoint Sets**](trees-and-tries.md)
+   * *Rationale*: Why trees overcome array/linked-list trade-offs, how AVL balance guarantees $O(\log N)$ worst-case bounds, how Tries index sequence prefixes, and how Union-Find clusters biological sequences.
+5. [**Hashing, Sets & Bloom Filters**](hashing-and-sets.md)
+   * *Rationale*: How hash functions achieve $O(1)$ expected lookup, amortized resizing costs, and how probabilistic Bloom filters filter novel $k$-mers in low memory.
+6. [**Graph Algorithms & Network Biology**](graphs.md)
+   * *Rationale*: Modeling biological networks (metabolic pathways, gene regulatory networks, assembly graphs), BFS/DFS traversals, topological sorting for workflow execution, and shortest path algorithms (Dijkstra, Bellman-Ford, MST).
+7. [**Dynamic Programming & Sequence Alignment**](dynamic-programming.md)
+   * *Rationale*: Solving problems with optimal substructure and overlapping subproblems without exponential recursion; the core foundation behind Smith-Waterman and Needleman-Wunsch sequence alignment.
