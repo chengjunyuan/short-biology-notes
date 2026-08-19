@@ -53,11 +53,7 @@ Find the length of the longest subsequence present in both strings in the same r
 ### The Recurrence Relation
 Let $DP[i][j]$ be the length of the LCS of prefixes $X[0 \dots i-1]$ and $Y[0 \dots j-1]$:
 
-$$DP[i][j] = \begin{cases} 
-0 & \text{if } i=0 \text{ or } j=0 \\
-DP[i-1][j-1] + 1 & \text{if } X[i-1] == Y[j-1] \quad \text{(Match!)} \\
-\max(DP[i-1][j], DP[i][j-1]) & \text{if } X[i-1] \ne Y[j-1] \quad \text{(Mismatch / Gap)}
-\end{cases}$$
+$$DP[i][j] = \begin{cases} 0 & \text{if } i=0 \text{ or } j=0 \\ DP[i-1][j-1] + 1 & \text{if } X[i-1] == Y[j-1] \quad \text{(Match!)} \\ \max(DP[i-1][j], DP[i][j-1]) & \text{if } X[i-1] \ne Y[j-1] \quad \text{(Mismatch / Gap)} \end{cases}$$
 
 ```python
 def longest_common_subsequence(seq1: str, seq2: str) -> int:
