@@ -6,9 +6,9 @@ nav_order: 1
 
 # Computational Biology Bridging Notes
 
-This repository is a practical starting reference point and terminology decoder for students and researchers transitioning from a life sciences background into computational biology and bioinformatics.
+This repository is a short guide for those transitioning from a life sciences background into computational biology and bioinformatics.
 
-The focus is squarely on the concepts, conventions, and tools you will actually encounter and apply in day-to-day work. These notes are not an exhaustive academic treatise and are not meant to turn you into an expert; rather, the goal is to get you up to speed with the fundamentals, understand what is happening under the hood, and navigate computational environments with confidence.
+The focus is on the concepts, conventions, and tools used in day-to-day work. These notes are not meant to turn you into an expert; rather, the goal is to get you up to speed with the fundamentals, understand what is happening, and navigate computational environments with confidence.
 
 ---
 
