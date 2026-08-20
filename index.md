@@ -4,32 +4,33 @@ layout: home
 nav_order: 1
 ---
 
-# Computational Biology Bridging Notes
+# Computational Biology Bridging Curriculum
 
-Welcome! This repository contains a curated set of bridging notes designed to transition students and researchers from a **Life Sciences** background into **Computational Biology and Bioinformatics**.
+Modern biological discovery is increasingly computational, spanning multi-gigabase sequencing datasets, high-throughput single-cell atlases, and atomic-scale macromolecular structures. Translating biological questions into scalable analyses requires a grounded understanding across computer systems, software engineering, algorithm analysis, and foundational mathematics.
 
-Traditional computer science and mathematics curricula can often feel abstract or disconnected from biological problems. These notes emphasize **the rationale behind computational decisions**—why we choose specific hardware, environments, algorithms, mathematical tools, and engineering practices when processing large-scale genomic, transcriptomic, and structural data.
+This curriculum provides a rigorous, problem-first bridging framework designed to transition students and researchers from a life sciences background into **Computational Biology and Bioinformatics**. Rather than focusing solely on syntax or abstract theory, these notes emphasize the physical, architectural, and mathematical rationales underlying computational decisions—explaining *why* specific hardware configurations, software abstractions, algorithms, and mathematical models are necessary to process large-scale biological data.
 
 ---
 
 ## Curriculum Structure
 
-### Foundational Modules
-* [**CS100: Computer Fundamentals**](docs/cs100/) — Hardware architectures, memory constraints, OS differences (POSIX/Linux vs. Windows), remote server navigation (SSH, tmux), and HPC workflows.
-* [**CS101: Software Engineering**](docs/cs101/) — Development environments, data processing pipelines, clean code principles, modularity, object-oriented design, package management (`uv`, `conda`), collaborative Git workflows, and the software development lifecycle.
+### Foundational Computing
+* [**CS100: Computer Fundamentals**](docs/cs100/) — Physical hardware constraints (CPU/GPU, RAM, storage), memory exhaustion (OOM), operating system architecture (Linux/POSIX vs. Windows NT), remote terminal navigation (SSH, `tmux`), and HPC cluster job scheduling (SLURM/PBS).
+* [**CS101: Software Engineering**](docs/cs101/) — Development environments, data processing pipelines, clean code standards, modularity, object-oriented programming (OOP), isolated package management (`uv`, `conda`), collaborative Git workflows, automated testing (`pytest`), CI/CD pipelines, and reproducibility.
 
-### Algorithms Core
-* [**CS201: Data Structures and Algorithms I**](docs/cs201/) — Comprehensive coverage of asymptotic analysis, sorting & searching, linear structures, priority queues & heaps, trees & tries, hashing & Bloom filters, graph algorithms, and dynamic programming.
-* **CS202: Data Structures and Algorithms II** *(Upcoming)* — Advanced algorithmic techniques (amortized analysis, network flow, string matching algorithms, de Bruijn graphs).
+### Algorithms & Data Structures
+* [**CS201: Data Structures and Algorithms I**](docs/cs201/) — Comprehensive coverage of asymptotic complexity ($O, \Omega, \Theta$), sorting and searching, linear data structures, heaps and priority queues, binary search trees, tries, hash tables, Bloom filters, graph algorithms, and dynamic programming.
+* **CS202: Data Structures and Algorithms II** *(Upcoming)* — Advanced algorithmic paradigms, amortized analysis, network flow, string matching algorithms, and de Bruijn graph construction.
 
-### Mathematics Foundations
-* [**MA101: Discrete Mathematics & Notation**](docs/ma101/) — The symbolic language of mathematics: summations ($\sum$), products ($\prod$), set-builder notation ($\in, \cup, \setminus$), and the Pigeonhole Principle.
-* [**MA201: Calculus & Optimization**](docs/ma201/) — Single- and multivariable calculus, the gradient vector ($\nabla f$), critical points, the Hessian matrix ($H$), Positive Semi-Definiteness (PSD), and Maximum Likelihood Estimation.
-* [**MA211: Linear Algebra**](docs/ma211/) — Matrix operations, Gaussian elimination ($A\mathbf{x} = \mathbf{b}$), determinants ($\det(A)$), matrix inverses, span/basis/dimension, and eigenvectors/eigenvalues powering PCA in genomics.
-* **MA221: Probability** *(Upcoming)* — Random variables, distributions, expectation, Markov chains.
-* **MA231: Statistics** *(Upcoming)* — Estimation, hypothesis testing, likelihood, Bayesian inference.
+### Mathematical Foundations
+* [**MA101: Discrete Mathematics & Notation**](docs/ma101/) — Decoding the formal mathematical notation of computational literature: summations ($\sum$), products ($\prod$), set-builder notation ($\in, \cup, \cap, \setminus$), propositional logic, and the Pigeonhole Principle in sequence alignment heuristics.
+* [**MA201: Calculus & Optimization**](docs/ma201/) — Single- and multivariable calculus, the gradient vector ($\nabla f$), directional derivatives, critical point classification via the Hessian matrix ($H$), Positive Semi-Definiteness (PSD), and Maximum Likelihood Estimation (MLE).
+* [**MA211: Linear Algebra**](docs/ma211/) — Matrix representation of high-dimensional biological data, systems of linear equations ($A\mathbf{x} = \mathbf{b}$), Gaussian elimination, geometric determinants, vector span and basis, and eigendecomposition powering Principal Component Analysis (PCA).
+* **MA221: Probability** *(Upcoming)* — Random variables, discrete and continuous probability distributions, expectation, variance, and Markov processes.
+* **MA231: Statistics** *(Upcoming)* — Statistical estimation, hypothesis testing, likelihood ratio tests, and Bayesian inference.
 
-### Applied Electives
-* **CS311: Classical Machine Learning** *(Upcoming)*
-* **CS301: Applied Algorithms in Genomics** *(Upcoming)*
-* **CS302: Applied Algorithms in Structural Bioinformatics** *(Upcoming)*
+### Applied Computational Biology
+* **CS301: Applied Algorithms in Genomics** *(Upcoming)* — Burrows-Wheeler Transform (BWT), FM-index, Hidden Markov Models (HMMs), variant calling, and genome assembly.
+* **CS302: Applied Algorithms in Structural Bioinformatics** *(Upcoming)* — Macromolecular coordinate systems, energy force fields, molecular dynamics simulations, molecular docking, and structural prediction architectures.
+* **CS311: Classical Machine Learning** *(Upcoming)* — Supervised and unsupervised statistical learning, feature selection, support vector machines, decision trees, random forests, and dimensionality reduction.
+
