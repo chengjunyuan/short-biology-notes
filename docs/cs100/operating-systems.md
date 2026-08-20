@@ -222,3 +222,8 @@ To avoid cross-platform friction and ensure reproducibility:
 
 > **Summary**: Operating systems provide the kernel and system call foundation for executing software. Because scientific computing standardizes on POSIX/Linux, developing in a Unix-compliant environment (Linux, macOS, or WSL2) eliminates line-ending bugs, path errors, and binary incompatibilities.
 
+<div class="page-nav">
+  <a href="hardware.html" class="page-nav-prev">&larr; Hardware Fundamentals</a>
+  <a href="servers-and-hpc.html" class="page-nav-next">Next: Remote Servers & HPC &rarr;</a>
+</div>
+

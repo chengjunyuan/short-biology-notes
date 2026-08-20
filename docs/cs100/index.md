@@ -30,3 +30,8 @@ This course establishes the foundational hardware components, operating system c
    * Remote access mechanics via SSH, cryptographic key pairs, and remote IDEs
    * Session persistence and preventing `SIGHUP` terminations with `tmux`
    * Shell environments (`$PATH`, `.bashrc`, `.zshrc`) and batch scheduling with SLURM/PBS
+
+<div class="page-nav">
+  <div></div>
+  <a href="hardware.html" class="page-nav-next">Next: Hardware Fundamentals &rarr;</a>
+</div>

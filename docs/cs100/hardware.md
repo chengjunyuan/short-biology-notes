@@ -199,3 +199,8 @@ When submitting jobs on institutional clusters (or provisioning cloud compute in
 
 > **Summary**: Effective computational performance requires matching algorithms to hardware strengths: high-clock CPUs for sequential logic, multicore threads for parallel data chunks, and GPUs with ample VRAM for dense tensor operations. Aligning job resource requests with physical hardware prevents both resource waste and out-of-memory terminations.
 
+<div class="page-nav">
+  <a href="index.html" class="page-nav-prev">&larr; CS100 Overview</a>
+  <a href="operating-systems.html" class="page-nav-next">Next: Operating Systems &rarr;</a>
+</div>
+
