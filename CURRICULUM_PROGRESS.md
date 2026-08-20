@@ -8,9 +8,9 @@ This document tracks the design philosophy, completed courses, and roadmap for t
 
 ## 1. Core Pedagogical Philosophy
 
-1. **Rationale-First ("Why over How")**:
-   Every module answers *why* specific tools, algorithms, or mathematical concepts exist before explaining mechanics:
-   * *CS100*: Why bioinformatics standardizes on Linux/POSIX, why RAM exhaustion (OOM) is the primary computing bottleneck.
+1. **Problem-First & Rationale-First ("Why over How")**:
+   Every topic answers *why* specific tools, hardware architectures, or mathematical concepts exist by addressing concrete practitioner dilemmas:
+   * *CS100*: Why RAM is required as a low-latency intermediate workspace; why CPUs handle branching logic while GPUs accelerate dense tensor operations; why scientific software standardizes on POSIX/Linux; why `tmux` survives network drops (`SIGHUP`); how SLURM/PBS allocates hardware.
    * *CS101*: Why streaming file I/O is mandatory over memory slurping, why `uv` and virtual environments prevent dependency drift.
    * *CS211*: Why OOP bundles state + behavior, why CI/CD automated tests act as assay controls against silent computational bugs.
    * *CS201*: Why binary search and trees bypass linear scans, why $K$-way merges using heaps enable streaming BAM file sorting.
@@ -18,9 +18,11 @@ This document tracks the design philosophy, completed courses, and roadmap for t
    * *MA201*: Why derivatives enable Maximum Likelihood Estimation; why the Hessian matrix determines local optima.
    * *MA211*: Why eigendecomposition and PCA reduce 20,000-gene spaces into 2D single-cell clusters.
 
-2. **Course Proportions & Depth**:
-   * **Concise Bridging Modules**: CS100, CS101, CS211, MA101, MA201, MA211.
-   * **Comprehensive Algorithms Core**: CS201 (CS2040S alignment) and upcoming CS202 (CS3230 alignment).
+2. **Tone, Terminology & Structure Standards**:
+   * **Tone**: Formal, direct, academic, and rigorous (no conversational filler, exclamation points, or meta-commentary).
+   * **Landing Pages**: Use `## Topics` header; provide concise bulleted lists under topic links without "Rationale:" tags.
+   * **Technical Vocabulary**: Define computing jargon (*bare-metal*, *hypervisor*, *daemon*, *node*, *subsystem*) upon first mention with concrete examples.
+   * **Failure Modes**: Provide exact error signatures (e.g. `Killed: 9`, `CUDA out of memory`, `/bin/bash^M: bad interpreter`, `SIGHUP`) and remediation commands.
 
 3. **LaTeX / KaTeX Formatting Convention**:
    * All matrix (`bmatrix`, `vmatrix`), alignment (`aligned`), and piecewise (`cases`) environments inside Markdown `$$...$$` blocks must be kept on **single lines** (or without line-broken `&` tokens) to ensure seamless rendering across KaTeX, Antigravity, and Jekyll.
@@ -31,10 +33,10 @@ This document tracks the design philosophy, completed courses, and roadmap for t
 
 ### Foundational Courses
 * **`docs/cs100/` — CS100: Computer Fundamentals**
-  * `index.md` — Overview & roadmap
-  * `hardware.md` — CPU vs. GPU/TPU, memory hierarchy, RAM exhaustion
-  * `operating-systems.md` — Linux/macOS vs. Windows, CRLF vs. LF, path separators, POSIX ecosystem
-  * `servers-and-hpc.md` — SSH keys, `tmux` persistent sessions, `$PATH`, SLURM scheduling
+  * `index.md` — Overview & formal topics overview
+  * `hardware.md` — CPU-RAM-SSD triad, cores/threads (SMT), CPU vs GPU acceleration realities, memory/storage hierarchy, hardware evaluation metrics, SLURM allocations, OOM/swap failure modes
+  * `operating-systems.md` — Kernel vs user space, deployment formats (bare-metal, VMs, containers, WSL2), Unix vs Windows NT divergence, terminals vs shells (`cmd`, PowerShell, Anaconda Prompt, PuTTY, WSL2), command resolution (`ls`, `pwd`), POSIX stream pipes, cross-platform pitfalls (`LF`/`CRLF`, paths, case sensitivity)
+  * `servers-and-hpc.md` — Physical server architecture (racks, wired fiber, data transfer), laptop vs server decision matrix, SSH under the hood (keys vs passwords, remote IDEs), `tmux` persistence against `SIGHUP`, `$PATH` & `.bashrc`/`.zshrc` dotfiles, shared cluster node specialization (login vs compute nodes) and SLURM/PBS job scheduling
 * **`docs/cs101/` — CS101: Programming Fundamentals**
   * `index.md` — Overview & roadmap
   * `mental-model.md` — Program transformation pipeline, biological data types

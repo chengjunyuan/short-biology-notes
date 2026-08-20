@@ -7,19 +7,26 @@ has_children: true
 
 # CS100: Computer Fundamentals
 
-Welcome to **CS100: Computer Fundamentals**! 
+Computational workflows operate within the constraints of physical hardware and operating system architectures. Understanding the distinction between volatile memory and persistent storage (RAM vs. SSD), the operational characteristics of processors (CPUs vs. GPUs), and the differences across computing form factors—from personal laptops to high-performance server racks—is essential for designing reliable, scalable pipelines.
 
-When analyzing biological data—whether assembling a 3-gigabase mammalian genome, running molecular dynamics simulations, or querying billions of short sequencing reads—computation is constrained by physical hardware and operating system realities.
-
-The goal of this course is not to memorize trivia, but to develop an intuition for **why computation behaves the way it does** and how to work effectively in remote, high-performance environments.
+This course establishes the foundational hardware components, operating system conventions, and remote computing environments necessary for all subsequent computational biology work.
 
 ---
 
-## Course Modules
+## Topics
 
-1. [**Hardware Architecture & Memory Bottlenecks**](hardware.html)
-   * *Rationale*: Why biological computations often crash due to out-of-memory (OOM) errors rather than slow CPUs, and when GPUs/TPUs actually help vs. when they are unnecessary.
-2. [**Operating Systems & Command-Line Implications**](operating-systems.html)
-   * *Rationale*: Why the bioinformatics world runs overwhelmingly on Linux/POSIX, and how differences in file paths, case sensitivity, and line endings (`CRLF` vs. `LF`) cause silent pipeline failures.
+1. [**Hardware Fundamentals**](hardware.html)
+   * The core computation triad: Processors (CPU/GPU), Memory (RAM), and Storage (SSD/HDD)
+   * Processors, physical cores, and logical threads (SMT/Hyper-Threading)
+   * CPU vs. GPU acceleration realities, VRAM constraints, and hardware evaluation metrics
+   * Job resource parameters (`--cpus`, `--mem`, `--gpus`) and failure modes (OOM, swap thrashing)
+2. [**Operating Systems & Command-Line Environments**](operating-systems.html)
+   * OS architecture, kernel vs. user space, and deployment formats (ISOs, VMs, Containers, WSL2)
+   * OS landscape (Linux, macOS/Darwin, Windows NT) and binary compatibility (ELF vs. PE)
+   * Terminal emulators vs. shells (`cmd.exe`, PowerShell, Anaconda Prompt, WSL2)
+   * Command resolution (`ls`, `pwd`, shell built-ins vs. `$PATH`) and cross-platform pipeline traps
 3. [**Working with Remote Servers & HPC**](servers-and-hpc.html)
-   * *Rationale*: Why biological workloads cannot run on personal laptops, how SSH and terminal multiplexers (`tmux`) keep computations alive, and how job schedulers (SLURM) allocate shared cluster resources.
+   * Physical server reality, networking (fiber vs. Wi-Fi), and laptop vs. server decision framework
+   * Remote access mechanics via SSH, cryptographic key pairs, and remote IDEs
+   * Session persistence and preventing `SIGHUP` terminations with `tmux`
+   * Shell environments (`$PATH`, `.bashrc`, `.zshrc`) and batch scheduling with SLURM/PBS
