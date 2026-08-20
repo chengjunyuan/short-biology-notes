@@ -246,8 +246,3 @@ bwa mem -t 16 /ref/hg38.fa reads_1.fq reads_2.fq | samtools sort -@ 16 -o sample
 
 > **Summary**: Remote computing scales computational capabilities beyond the laptop. SSH provides encrypted terminal tunnels, `tmux` guarantees process survival against network drops, `$PATH` and `.bashrc` structure executable environments, and batch schedulers (SLURM/PBS) manage fair access to massive shared compute nodes.
 
-<div class="page-nav">
-  <a href="operating-systems.html" class="page-nav-prev">&larr; Operating Systems</a>
-  <a href="../cs101/index.html" class="page-nav-next">Next Course: CS101 &rarr;</a>
-</div>
-

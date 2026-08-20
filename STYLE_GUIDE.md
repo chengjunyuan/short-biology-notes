@@ -151,17 +151,6 @@ Whenever discussing system limits or cross-platform issues, include the exact er
 * **Display Math**: Use `$$...$$` or `\[...\]`.
 * **KaTeX Single-Line Convention**: Keep all matrix (`bmatrix`), alignment (`aligned`), and piecewise (`cases`) environments inside Markdown `$$...$$` blocks on single lines without broken `&` tokens to ensure cross-renderer compatibility.
 
-### E. Page Navigation Buttons (`.page-nav`)
-At the bottom of every page (below the summary blockquote), include responsive next/previous navigation buttons:
-
-```html
-<div class="page-nav">
-  <a href="previous-topic.html" class="page-nav-prev">&larr; Previous Topic Title</a>
-  <a href="next-topic.html" class="page-nav-next">Next Topic Title &rarr;</a>
-</div>
-```
-*(On landing pages, use an empty `<div></div>` on the left so the Next button aligns to the right. On the final topic page, link `Next Course: [Code] &rarr;`).*
-
 ---
 
 ## 6. Checklist for Updating Subsequent Courses
