@@ -16,8 +16,7 @@ Traditional computer science and mathematics curricula can often feel abstract o
 
 ### Foundational Modules
 * [**CS100: Computer Fundamentals**](docs/cs100/) — Hardware architectures, memory constraints, OS differences (POSIX/Linux vs. Windows), remote server navigation (SSH, tmux), and HPC workflows.
-* [**CS101: Programming Fundamentals**](docs/cs101/) — Mental models for program execution, Python data collections, robust biological file parsing (FASTA/TSV), and modern environment management (`uv`, `conda`).
-* [**CS211: Software Engineering & OOP**](docs/cs211/) — High-level Object-Oriented design, Git & GitHub workflows, clean code standards, automated testing with `pytest`, and building reproducible bioinformatic pipelines with CI/CD.
+* [**CS101: Software Engineering**](docs/cs101/) — Development environments, data processing pipelines, clean code principles, modularity, object-oriented design, package management (`uv`, `conda`), collaborative Git workflows, and the software development lifecycle.
 
 ### Algorithms Core
 * [**CS201: Data Structures and Algorithms I**](docs/cs201/) — Comprehensive coverage of asymptotic analysis, sorting & searching, linear structures, priority queues & heaps, trees & tries, hashing & Bloom filters, graph algorithms, and dynamic programming.

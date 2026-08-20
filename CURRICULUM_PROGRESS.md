@@ -37,19 +37,14 @@ This document tracks the design philosophy, completed courses, and roadmap for t
   * `hardware.md` — CPU-RAM-SSD triad, cores/threads (SMT), CPU vs GPU acceleration realities, memory/storage hierarchy, hardware evaluation metrics, SLURM allocations, OOM/swap failure modes
   * `operating-systems.md` — Kernel vs user space, deployment formats (bare-metal, VMs, containers, WSL2), Unix vs Windows NT divergence, terminals vs shells (`cmd`, PowerShell, Anaconda Prompt, PuTTY, WSL2), command resolution (`ls`, `pwd`), POSIX stream pipes, cross-platform pitfalls (`LF`/`CRLF`, paths, case sensitivity)
   * `servers-and-hpc.md` — Physical server architecture (racks, wired fiber, data transfer), laptop vs server decision matrix, SSH under the hood (keys vs passwords, remote IDEs), `tmux` persistence against `SIGHUP`, `$PATH` & `.bashrc`/`.zshrc` dotfiles, shared cluster node specialization (login vs compute nodes) and SLURM/PBS job scheduling
-* **`docs/cs101/` — CS101: Programming Fundamentals**
-  * `index.md` — Overview & roadmap
-  * `mental-model.md` — Program transformation pipeline, biological data types
-  * `collections.md` — Lists, tuples, dicts (codon maps), sets ($k$-mers), references & mutability
-  * `file-io.md` — Streaming vs. slurping, context managers, FASTA and TSV parsers
-  * `package-management.md` — Virtual environments, `uv` vs. `conda`, lockfiles & reproducibility
-* **`docs/cs211/` — CS211: Software Engineering & OOP**
-  * `index.md` — Overview & roadmap
-  * `oop-intro.md` — High-level OOP concepts, classes, encapsulation, inheritance
-  * `version-control.md` — Git mental model, branching, pull requests, merge conflicts
-  * `clean-code.md` — DRY, PEP 8, `ruff` formatters/linters, type hints (`mypy`)
-  * `testing-and-ci.md` — Unit testing with `pytest`, GitHub Actions CI pipelines
-  * `reproducibility.md` — `src/` layout, structured `logging` vs. `print()`, Docker/Singularity
+* **`docs/cs101/` — CS101: Software Engineering**
+  * `index.md` — Overview & formal topics roadmap
+  * `pipeline-and-ide.md` — IDE architecture (VS Code, LSP, debuggers, remote SSH) and the Ingest $\rightarrow$ Process $\rightarrow$ Emit execution triad
+  * `clean-code-and-functions.md` — Readability, PEP 8 naming conventions, function decomposition, docstrings, type annotations (`mypy`), and linters (`ruff`)
+  * `oop-fundamentals.md` — Objects as custom data types, class blueprints vs. instances, encapsulation, validation, and `@dataclass`
+  * `package-management.md` — Dependency drift, virtual environment isolation, fast Python package management with `uv`, and binary environments with `conda`/`mamba`
+  * `version-control.md` — Git DAG mental model, feature branching, GitHub Pull Requests, peer code review, and merge conflict resolution
+  * `sdlc-and-reproducibility.md` — Scientific SDLC cycle, automated testing with `pytest`, GitHub Actions CI, structured logging, and containerization (Docker/Singularity)
 
 ### Algorithms Core
 * **`docs/cs201/` — CS201: Data Structures & Algorithms I (CS2040S-aligned)**
