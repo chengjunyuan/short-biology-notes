@@ -4,11 +4,11 @@ layout: home
 nav_order: 1
 ---
 
-# Computational Biology Bridging Curriculum
+# Computational Biology Bridging Notes
 
-Modern biological discovery is increasingly computational, spanning multi-gigabase sequencing datasets, high-throughput single-cell atlases, and atomic-scale macromolecular structures. Translating biological questions into scalable analyses requires a grounded understanding across computer systems, software engineering, algorithm analysis, and foundational mathematics.
+This repository is a practical starting reference point and terminology decoder for students and researchers transitioning from a life sciences background into computational biology and bioinformatics.
 
-This curriculum provides a rigorous, problem-first bridging framework designed to transition students and researchers from a life sciences background into **Computational Biology and Bioinformatics**. Rather than focusing solely on syntax or abstract theory, these notes emphasize the physical, architectural, and mathematical rationales underlying computational decisions—explaining *why* specific hardware configurations, software abstractions, algorithms, and mathematical models are necessary to process large-scale biological data.
+The focus is squarely on the concepts, conventions, and tools you will actually encounter and apply in day-to-day work. These notes are not an exhaustive academic treatise and are not meant to turn you into an expert; rather, the goal is to get you up to speed with the fundamentals, understand what is happening under the hood, and navigate computational environments with confidence.
 
 ---
 
