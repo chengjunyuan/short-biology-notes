@@ -13,3 +13,30 @@
   };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'default',
+    securityLevel: 'loose'
+  });
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const mermaidBlocks = document.querySelectorAll('code.language-mermaid, div.language-mermaid pre code, div.language-mermaid pre');
+    for (const block of mermaidBlocks) {
+      const container = block.closest('.language-mermaid') || block.parentElement;
+      if (container && container.parentNode) {
+        const mermaidDiv = document.createElement('pre');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.style.background = 'transparent';
+        mermaidDiv.style.textAlign = 'center';
+        mermaidDiv.textContent = block.textContent;
+        container.parentNode.replaceChild(mermaidDiv, container);
+      }
+    }
+    await mermaid.run({
+      nodes: document.querySelectorAll('pre.mermaid, div.mermaid')
+    });
+  });
+</script>

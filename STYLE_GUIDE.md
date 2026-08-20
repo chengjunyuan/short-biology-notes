@@ -121,15 +121,11 @@ nav_order: [N]
 
 ## 5. Visual and Formatting Standards
 
-### A. System Architecture Diagrams
-Use clean, fixed-width ASCII / Unicode box diagrams to illustrate data flows, memory hierarchies, and process relationships:
+### A. System Architecture & Flow Visuals
+Use clean, responsive vector SVGs or Mermaid.js diagrams for architectural layouts, silicon topologies, and data pipelines:
+* **Responsive Inline SVGs**: Ideal for bespoke silicon dies, memory hierarchies, and hardware comparison matrices (using container `max-width`, rounded corner cards, clean badges, and system typography).
+* **Mermaid.js Flowcharts**: Ideal for algorithmic flows, state machines, and procedural pipelines written natively in Markdown (rendered automatically via `_includes/head_custom.html`).
 
-```
-+------------------+         High-Speed Bus        +--------------------+
-|  Storage (SSD)   | ----------------------------> | Main Memory (RAM)  |
-|  - Non-volatile  |   Loaded into working memory  | - Volatile         |
-+------------------+                               +--------------------+
-```
 
 ### B. Comparison Tables
 Organize multidimensional trade-offs using Markdown tables with explicit feature dimensions in the first column:
