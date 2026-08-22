@@ -169,7 +169,7 @@ A basic text editor (such as Notepad or `nano`) simply writes raw characters to 
   <!-- Bottom Right: Integrated Terminal & Remote SSH -->
   <g transform="translate(425, 165)">
     <rect width="330" height="105" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
-    <rect width="425" height="24" rx="6" fill="#4c1d95"/>
+    <rect width="330" height="24" rx="6" fill="#4c1d95"/>
     <text x="165" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#ddd6fe">Integrated Terminal &amp; Remotes</text>
     
     <text x="14" y="44" font-size="10" fill="#e2e8f0">• Isolated Virtual Environments (<tspan font-family="monospace" fill="#c4b5fd">.venv</tspan>, <tspan font-family="monospace" fill="#c4b5fd">uv</tspan>)</text>

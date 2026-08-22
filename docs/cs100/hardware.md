@@ -61,8 +61,8 @@ Every computing platform—from a laptop to a high-performance compute node—im
   <!-- Bus 2: RAM to CPU -->
   <path d="M 500 85 L 535 85" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green)"/>
   <path d="M 540 105 L 505 105" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green)"/>
-  <text x="520" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Memory Bus</text>
-  <text x="520" y="125" text-anchor="middle" font-size="10" fill="#64748b">DDR Channels</text>
+  <text x="510" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Memory Bus</text>
+  <text x="510" y="125" text-anchor="middle" font-size="10" fill="#64748b">DDR Channels</text>
 
   <!-- CPU Node -->
   <g transform="translate(540, 30)">
