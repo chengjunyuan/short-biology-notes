@@ -32,73 +32,100 @@ A **server** is not a mystical entity; it is physically a computer designed for 
   <rect width="780" height="280" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
 
   <!-- Left: Data Center Rack -->
-  <g transform="translate(25, 20)">
-    <rect width="280" height="240" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
-    <rect width="280" height="28" rx="8" fill="#1e293b"/>
-    <text x="140" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#f8fafc">Data Center Rack (Headless Nodes)</text>
+  <g transform="translate(20, 20)">
+    <rect width="255" height="240" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+    <rect width="255" height="28" rx="8" fill="#1e293b"/>
+    <text x="127" y="19" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f8fafc">Data Center Rack (Headless Nodes)</text>
 
     <!-- Rack Unit 1: Compute Node -->
-    <g transform="translate(12, 38)">
-      <rect width="256" height="56" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
-      <text x="12" y="20" font-size="11" font-weight="700" fill="#1e293b">1U Compute Node (Worker)</text>
-      <text x="12" y="36" font-size="10" fill="#475569">• 128 Cores (Dual EPYC/Xeon)</text>
-      <text x="12" y="48" font-size="10" fill="#64748b">• 512 GB – 1.5 TB DDR5 RAM</text>
+    <g transform="translate(10, 36)">
+      <rect width="235" height="58" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+      <text x="10" y="18" font-size="10.5" font-weight="700" fill="#1e293b">1U Compute Node (Worker)</text>
+      <text x="10" y="34" font-size="9.5" fill="#475569">• 128 Cores (Dual EPYC/Xeon)</text>
+      <text x="10" y="48" font-size="9.5" fill="#64748b">• 512 GB – 1.5 TB DDR5 RAM</text>
     </g>
 
     <!-- Rack Unit 2: GPU Node -->
-    <g transform="translate(12, 102)">
-      <rect width="256" height="56" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
-      <text x="12" y="20" font-size="11" font-weight="700" fill="#166534">4U Accelerator / AI Node</text>
-      <text x="12" y="36" font-size="10" fill="#15803d">• 8× NVIDIA H100 GPUs (640 GB VRAM)</text>
-      <text x="12" y="48" font-size="10" fill="#15803d">• Deep Learning &amp; Cryo-EM</text>
+    <g transform="translate(10, 101)">
+      <rect width="235" height="58" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+      <text x="10" y="18" font-size="10.5" font-weight="700" fill="#166534">4U Accelerator / AI Node</text>
+      <text x="10" y="34" font-size="9.5" fill="#15803d">• 8× NVIDIA H100 GPUs (640 GB)</text>
+      <text x="10" y="48" font-size="9.5" fill="#15803d">• Cryo-EM &amp; Deep Learning</text>
     </g>
 
     <!-- Rack Unit 3: Storage Array -->
-    <g transform="translate(12, 166)">
-      <rect width="256" height="62" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
-      <text x="12" y="20" font-size="11" font-weight="700" fill="#1e40af">Storage Array (Lustre / GPFS)</text>
-      <text x="12" y="36" font-size="10" fill="#1d4ed8">• Petabytes NVMe + High-Capacity HDD</text>
-      <text x="12" y="48" font-size="10" fill="#64748b">• Shared across all cluster nodes</text>
+    <g transform="translate(10, 166)">
+      <rect width="235" height="64" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+      <text x="10" y="18" font-size="10.5" font-weight="700" fill="#1e40af">Storage Array (Lustre / GPFS)</text>
+      <text x="10" y="34" font-size="9.5" fill="#1d4ed8">• Petabytes NVMe + High-Cap HDD</text>
+      <text x="10" y="48" font-size="9.5" fill="#64748b">• Shared across cluster nodes</text>
     </g>
   </g>
 
-  <!-- Middle: Network Infrastructure -->
-  <g transform="translate(325, 45)">
-    <!-- Fiber Cable Pipeline -->
-    <path d="M 0 50 L 110 50" stroke="#059669" stroke-width="3" marker-end="url(#arrow-emerald-hpc)"/>
-    <path d="M 110 70 L 0 70" stroke="#059669" stroke-width="3" marker-end="url(#arrow-emerald-hpc)"/>
-    <text x="55" y="38" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">10–100 Gbps Fiber</text>
-    <text x="55" y="90" text-anchor="middle" font-size="9" fill="#64748b">Wired Low Latency</text>
-
-    <!-- Institutional Gateway Box -->
-    <g transform="translate(20, 115)">
-      <rect width="90" height="75" rx="6" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
-      <rect width="90" height="22" rx="6" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
-      <text x="45" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#6d28d9">Campus Gateway</text>
-      <text x="45" y="42" text-anchor="middle" font-size="9" fill="#475569">Firewall</text>
-      <text x="45" y="56" text-anchor="middle" font-size="9" fill="#475569">VPN / Bastion</text>
-      <text x="45" y="70" text-anchor="middle" font-size="9" font-weight="600" fill="#6d28d9">Port 22 (SSH)</text>
-    </g>
+  <!-- Middle-Left: Internal High-Speed Cluster Fabric -->
+  <g transform="translate(275, 0)">
+    <path d="M 7 130 L 73 130" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-emerald-hpc)"/>
+    <path d="M 73 146 L 7 146" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-emerald-hpc)"/>
+    <text x="40" y="116" text-anchor="middle" font-size="9" font-weight="700" fill="#059669">10–100 Gbps</text>
+    <text x="40" y="165" text-anchor="middle" font-size="8.5" font-weight="600" fill="#047857">Cluster Fabric</text>
+    <text x="40" y="177" text-anchor="middle" font-size="8" fill="#64748b">(Low Latency)</text>
   </g>
 
-  <!-- Connection to Client -->
-  <path d="M 455 152 L 495 152" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-blue-hpc)"/>
-  <path d="M 495 168 L 455 168" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-blue-hpc)"/>
+  <!-- Middle: Institutional Gateway Box -->
+  <g transform="translate(355, 30)">
+    <rect width="120" height="220" rx="7" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect width="120" height="26" rx="7" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="60" y="17" text-anchor="middle" font-size="10.5" font-weight="700" fill="#6d28d9">Campus Gateway</text>
+
+    <!-- Security Firewall -->
+    <rect x="8" y="35" width="104" height="42" rx="4" fill="#faf5ff" stroke="#ddd6fe"/>
+    <text x="60" y="50" text-anchor="middle" font-size="9" font-weight="700" fill="#6d28d9">Security Firewall</text>
+    <text x="60" y="63" text-anchor="middle" font-size="8" fill="#475569">Blocks raw ports</text>
+    <text x="60" y="73" text-anchor="middle" font-size="8" fill="#64748b">Inspects traffic</text>
+
+    <!-- Bastion / Login -->
+    <rect x="8" y="85" width="104" height="52" rx="4" fill="#faf5ff" stroke="#ddd6fe"/>
+    <text x="60" y="100" text-anchor="middle" font-size="9" font-weight="700" fill="#6d28d9">Bastion / Head</text>
+    <text x="60" y="113" text-anchor="middle" font-size="8" fill="#475569">VPN / Login Node</text>
+    <text x="60" y="125" text-anchor="middle" font-size="8.5" font-weight="700" fill="#7c3aed">Port 22 (SSH)</text>
+
+    <!-- Slurm / Internal Routing -->
+    <rect x="8" y="145" width="104" height="65" rx="4" fill="#faf5ff" stroke="#ddd6fe"/>
+    <text x="60" y="160" text-anchor="middle" font-size="9" font-weight="700" fill="#6d28d9">Cluster Router</text>
+    <text x="60" y="173" text-anchor="middle" font-size="8" fill="#475569">Slurm Controller</text>
+    <text x="60" y="185" text-anchor="middle" font-size="8" fill="#475569">Job Scheduling</text>
+    <text x="60" y="197" text-anchor="middle" font-size="8" fill="#64748b">&amp; Node Routing</text>
+  </g>
+
+  <!-- Middle-Right: Encrypted SSH / VPN Connection to Client -->
+  <g transform="translate(475, 0)">
+    <path d="M 7 130 L 73 130" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-blue-hpc)"/>
+    <path d="M 73 146 L 7 146" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-blue-hpc)"/>
+    <text x="40" y="110" text-anchor="middle" font-size="9" font-weight="700" fill="#2563eb">Encrypted</text>
+    <text x="40" y="121" text-anchor="middle" font-size="9" font-weight="700" fill="#2563eb">SSH Tunnel</text>
+    <text x="40" y="165" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1d4ed8">Internet / Wi-Fi</text>
+    <text x="40" y="177" text-anchor="middle" font-size="8" fill="#64748b">(Text/Key I/O)</text>
+  </g>
 
   <!-- Right: Local Laptop -->
-  <g transform="translate(500, 45)">
-    <rect width="255" height="190" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
-    <rect width="255" height="28" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
-    <text x="127" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">Local Laptop / Workstation</text>
+  <g transform="translate(555, 20)">
+    <rect width="205" height="240" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="205" height="28" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="102" y="19" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d4ed8">Local Laptop / Client</text>
 
-    <text x="16" y="55" font-size="11" font-weight="600" fill="#334155">• Interactive Code Editing (IDE)</text>
-    <text x="16" y="76" font-size="11" fill="#475569">• Prototyping on small datasets</text>
-    <text x="16" y="97" font-size="11" fill="#475569">• Plot rendering &amp; figure inspection</text>
-    <text x="16" y="118" font-size="11" fill="#64748b">• Limited: 8–32 GB RAM, 4–16 Cores</text>
+    <text x="12" y="48" font-size="9.5" font-weight="600" fill="#1e293b">• Interactive IDE (VS Code)</text>
+    <text x="12" y="64" font-size="9" fill="#475569">• Prototyping small datasets</text>
+    <text x="12" y="80" font-size="9" fill="#475569">• Plot &amp; figure inspection</text>
+    <text x="12" y="96" font-size="9" fill="#475569">• Terminal &amp; SSH key host</text>
 
-    <rect x="14" y="136" width="227" height="40" rx="5" fill="#dbeafe"/>
-    <text x="127" y="154" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Encrypted SSH Tunnel</text>
-    <text x="127" y="168" text-anchor="middle" font-size="9" fill="#1d4ed8">Transmits keystrokes &amp; receives text</text>
+    <!-- Local Constraints Box -->
+    <rect x="10" y="112" width="185" height="118" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="18" y="130" font-size="9.5" font-weight="700" fill="#0f172a">Local Constraints:</text>
+    <text x="18" y="148" font-size="9" fill="#64748b">• Limited: 8–32 GB RAM</text>
+    <text x="18" y="164" font-size="9" fill="#64748b">• 4–16 CPU cores (thermal limits)</text>
+    <text x="18" y="180" font-size="9" fill="#64748b">• Sleep/disconnects on lid close</text>
+    <text x="18" y="196" font-size="9" fill="#dc2626">• No high-throughput GPUs</text>
+    <text x="18" y="212" font-size="9" fill="#64748b">• Battery &amp; consumer Wi-Fi</text>
   </g>
 </svg>
 
