@@ -20,7 +20,7 @@ The focus is on the concepts, conventions, and tools used in day-to-day work. Th
 
 ### Algorithms & Data Structures
 * [**CS201: Data Structures and Algorithms I**](docs/cs201/) *(In Progress / WIP)* — Comprehensive coverage of asymptotic complexity ($O, \Omega, \Theta$), sorting and searching, linear data structures, heaps and priority queues, binary search trees, tries, hash tables, Bloom filters, graph algorithms, and dynamic programming.
-* **CS202: Data Structures and Algorithms II** *(Upcoming / Not Started)* — Advanced algorithmic paradigms, amortized analysis, network flow, string matching algorithms, and de Bruijn graph construction.
+* **CS202: Data Structures and Algorithms II** *(Upcoming / Not Started)* — Advanced algorithm design based on Kleinberg & Tardos (Ch. 1–7, 11–13): Gale-Shapley stable matching, rigorous greedy proofs (exchange arguments, clustering, Huffman), divide-and-conquer (FFT, closest pair), advanced DP (RNA secondary structure, linear-space Hirschberg alignment), network flow (Ford-Fulkerson, Max-Flow Min-Cut, bipartite matching), approximation algorithms (metric $k$-center, set cover, LP rounding), local search (Metropolis, simulated annealing), and randomized algorithms (Karger's min-cut, MAX 3-SAT, universal hashing, Chernoff bounds).
 
 ### Mathematical Foundations
 * [**MA101: Discrete Mathematics & Notation**](docs/ma101/) *(In Progress / WIP)* — Decoding the formal mathematical notation of computational literature: summations ($\sum$), products ($\prod$), set-builder notation ($\in, \cup, \cap, \setminus$), propositional logic, and the Pigeonhole Principle in sequence alignment heuristics.

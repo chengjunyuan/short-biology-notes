@@ -81,7 +81,16 @@ This document tracks the design philosophy, completed courses, and roadmap for t
 ## 3. Remaining Roadmap
 
 ### Upcoming Compulsory Modules
-1. **CS202 Data Structures and Algorithms II** *(CS3230 alignment: Advanced DP, Greedy, Network Flow, NP-completeness, String Algorithms / de Bruijn graphs)*
+1. **CS202 Data Structures and Algorithms II** *(Kleinberg & Tardos Algorithm Design alignment, Chapters 1–7 & 11–13)*:
+   * **Ch 1–2 (Representative Problems & Tractability)**: Stable Matching (Gale-Shapley algorithm), tractability, asymptotic growth, priority queues.
+   * **Ch 3 (Graphs)**: Connectivity, BFS/DFS traversal implementations, testing bipartiteness, DAGs & topological ordering.
+   * **Ch 4 (Greedy Algorithms)**: Interval scheduling ("greedy stays ahead"), minimizing lateness (exchange arguments), optimal caching, shortest paths (Dijkstra), MST (Kruskal & Union-Find, Prim), maximum-spacing clustering, Huffman coding, minimum-cost arborescences.
+   * **Ch 5 (Divide and Conquer)**: Recurrences (Master Theorem), counting inversions, 2D closest pair of points, integer multiplication, Fast Fourier Transform (FFT).
+   * **Ch 6 (Dynamic Programming)**: Weighted interval scheduling, segmented least squares, subset sums & knapsack, RNA secondary structure over intervals, sequence alignment in linear space (Hirschberg's algorithm), shortest paths (Bellman-Ford) & negative cycles.
+   * **Ch 7 (Network Flow)**: Ford-Fulkerson algorithm, Max-Flow Min-Cut Theorem, scaling augmenting paths, preflow-push, bipartite matching, edge-disjoint paths, circulation with demands, project selection & image segmentation.
+   * **Ch 11 (Approximation Algorithms)**: Load balancing, metric center selection ($k$-center), greedy set cover, pricing method / dual fitting (vertex cover, disjoint paths), LP rounding for vertex cover & load balancing, arbitrary approximation schemes (FPTAS for knapsack).
+   * **Ch 12 (Local Search)**: Optimization landscapes, Metropolis algorithm & simulated annealing, Hopfield neural networks, maximum-cut approximation, neighbor relations, Nash equilibria.
+   * **Ch 13 (Randomized Algorithms)**: Contention resolution, Karger's global min-cut, linearity of expectation, randomized MAX 3-SAT, randomized quicksort / selection, universal hashing, closest pair, randomized caching, Chernoff bounds, and load balancing.
 2. **MA221 Probability** *(Random variables, common distributions, expectation, Markov chains)*
 3. **MA231 Statistics** *(Estimation, hypothesis testing, likelihood ratios, Bayesian inference)*
 
