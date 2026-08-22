@@ -402,7 +402,7 @@ On a standalone server, you can run commands directly on the terminal. However, 
   <rect width="780" height="300" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
 
   <!-- Left: User & Login Node -->
-  <g transform="translate(25, 20)">
+  <g transform="translate(20, 20)">
     <rect width="220" height="260" rx="8" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
     <rect width="220" height="28" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
     <text x="110" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">Login Node (Head Node)</text>
@@ -414,16 +414,16 @@ On a standalone server, you can run commands directly on the terminal. However, 
     <text x="14" y="134" font-size="11" font-family="monospace" fill="#7c3aed">• sbatch submit_job.sh</text>
 
     <rect x="10" y="152" width="200" height="96" rx="5" fill="#fef2f2" stroke="#fca5a5"/>
-    <text x="100" y="172" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">⚠️ STRICT RULE</text>
-    <text x="100" y="190" text-anchor="middle" font-size="10" fill="#b91c1c">NO heavy computation here!</text>
-    <text x="100" y="206" text-anchor="middle" font-size="9" fill="#7f1d1d">Heavy jobs freeze the node for</text>
-    <text x="100" y="220" text-anchor="middle" font-size="9" fill="#7f1d1d">all researchers &amp; get killed.</text>
+    <text x="104" y="172" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">⚠️ STRICT RULE</text>
+    <text x="106" y="190" text-anchor="middle" font-size="10" fill="#b91c1c">NO heavy computation here!</text>
+    <text x="106" y="206" text-anchor="middle" font-size="9" fill="#7f1d1d">Heavy jobs freeze the node for</text>
+    <text x="106" y="220" text-anchor="middle" font-size="9" fill="#7f1d1d">all researchers &amp; get killed.</text>
   </g>
 
   <!-- Middle: Resource Scheduler (SLURM / PBS) -->
   <g transform="translate(270, 20)">
     <!-- Arrow from Login Node to SLURM -->
-    <path d="M -25 80 L 0 80" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow-purple-slurm)"/>
+    <path d="M -27 80 L -7 80" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow-purple-slurm)"/>
 
     <rect width="210" height="260" rx="8" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
     <rect width="210" height="28" rx="8" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
@@ -446,9 +446,9 @@ On a standalone server, you can run commands directly on the terminal. However, 
   </g>
 
   <!-- Right: Compute Nodes Pool -->
-  <g transform="translate(505, 20)">
+  <g transform="translate(510, 20)">
     <!-- Arrow from SLURM to Compute Pool -->
-    <path d="M -25 80 L 0 80" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green-slurm)"/>
+    <path d="M -27 80 L -7 80" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green-slurm)"/>
 
     <rect width="250" height="260" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
     <rect width="250" height="28" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>

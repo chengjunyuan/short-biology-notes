@@ -30,7 +30,7 @@ Every computing platform—from a laptop to a high-performance compute node—im
   <rect width="780" height="250" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
 
   <!-- Storage Node -->
-  <g transform="translate(25, 30)">
+  <g transform="translate(10, 30)">
     <rect width="215" height="135" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
     <rect width="215" height="30" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
     <text x="107" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#334155">Storage (NVMe / SSD)</text>
@@ -42,9 +42,9 @@ Every computing platform—from a laptop to a high-performance compute node—im
   </g>
 
   <!-- Bus 1: Storage to RAM -->
-  <path d="M 240 95 L 285 95" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
-  <text x="262" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">PCIe Bus</text>
-  <text x="262" y="115" text-anchor="middle" font-size="10" fill="#64748b">Load Data</text>
+  <path d="M 228 95 L 278 95" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
+  <text x="255" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">PCIe Bus</text>
+  <text x="255" y="115" text-anchor="middle" font-size="10" fill="#64748b">Load Data</text>
 
   <!-- RAM Node -->
   <g transform="translate(285, 30)">
@@ -59,13 +59,15 @@ Every computing platform—from a laptop to a high-performance compute node—im
   </g>
 
   <!-- Bus 2: RAM to CPU -->
-  <path d="M 500 85 L 535 85" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green)"/>
-  <path d="M 540 105 L 505 105" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green)"/>
-  <text x="510" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Memory Bus</text>
-  <text x="510" y="125" text-anchor="middle" font-size="10" fill="#64748b">DDR Channels</text>
+  <path d="M 503 85 L 547 85" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <path d="M 552 105 L 508 105" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <text x="528" y="64" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Memory</text>
+  <text x="528" y="74" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Bus</text>
+  <text x="528" y="125" text-anchor="middle" font-size="10" fill="#64748b">DDR</text>
+  <text x="528" y="135" text-anchor="middle" font-size="10" fill="#64748b">Channels</text>
 
   <!-- CPU Node -->
-  <g transform="translate(540, 30)">
+  <g transform="translate(555, 30)">
     <rect width="215" height="135" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
     <rect width="215" height="30" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
     <text x="107" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#047857">Processor (CPU / GPU)</text>
@@ -77,8 +79,8 @@ Every computing platform—from a laptop to a high-performance compute node—im
   </g>
 
   <!-- Bottom Workflow Summary Banner -->
-  <g transform="translate(25, 185)">
-    <rect width="730" height="42" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+  <g transform="translate(10, 185)">
+    <rect width="760" height="42" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
     <text x="365" y="26" text-anchor="middle" font-size="12" fill="#334155">
       <tspan font-weight="700" fill="#0f172a">Execution Data Flow: </tspan>
       Data/Binaries stored on SSD ➔ Copied to RAM at runtime ➔ Fetched into CPU registers for execution

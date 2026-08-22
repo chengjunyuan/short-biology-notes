@@ -36,7 +36,7 @@ Git does not track files as diff deltas over time; it models the project as a **
     <text x="245" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">Local Developer Workspace</text>
 
     <!-- State 1: Working Directory -->
-    <g transform="translate(15, 36)">
+    <g transform="translate(5, 36)">
       <rect width="135" height="155" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
       <rect width="135" height="24" rx="6" fill="#f1f5f9"/>
       <text x="67" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#1e293b">1. Working Tree</text>
@@ -48,8 +48,8 @@ Git does not track files as diff deltas over time; it models the project as a **
     </g>
 
     <!-- Arrow: git add -->
-    <path d="M 155 110 L 175 110" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue-git)"/>
-    <text x="165" y="100" text-anchor="middle" font-size="9" font-family="monospace" font-weight="700" fill="#2563eb">git add</text>
+    <path d="M 143 110 L 173 110" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue-git)"/>
+    <text x="160" y="100" text-anchor="middle" font-size="9" font-family="monospace" font-weight="700" fill="#2563eb">git add</text>
 
     <!-- State 2: Staging Area -->
     <g transform="translate(180, 36)">
@@ -64,11 +64,11 @@ Git does not track files as diff deltas over time; it models the project as a **
     </g>
 
     <!-- Arrow: git commit -->
-    <path d="M 320 110 L 340 110" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue-git)"/>
-    <text x="330" y="100" text-anchor="middle" font-size="8" font-family="monospace" font-weight="700" fill="#2563eb">commit</text>
+    <path d="M 318 110 L 348 110" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue-git)"/>
+    <text x="335" y="100" text-anchor="middle" font-size="8" font-family="monospace" font-weight="700" fill="#2563eb">commit</text>
 
     <!-- State 3: Local Repo (.git) -->
-    <g transform="translate(345, 36)">
+    <g transform="translate(355, 36)">
       <rect width="130" height="155" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
       <rect width="130" height="24" rx="6" fill="#d1fae5"/>
       <text x="65" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">3. Local Repo (.git)</text>
@@ -83,10 +83,10 @@ Git does not track files as diff deltas over time; it models the project as a **
   </g>
 
   <!-- Network Sync Arrows -->
-  <path d="M 515 90 L 545 90" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple-git)"/>
+  <path d="M 515 90 L 544 90" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple-git)"/>
   <text x="530" y="80" text-anchor="middle" font-size="8" font-family="monospace" font-weight="700" fill="#7c3aed">push</text>
 
-  <path d="M 545 140 L 515 140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple-git)"/>
+  <path d="M 546 140 L 516 140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple-git)"/>
   <text x="530" y="155" text-anchor="middle" font-size="8" font-family="monospace" font-weight="700" fill="#7c3aed">pull</text>
 
   <!-- Right: Remote Repository (GitHub) -->
