@@ -15,30 +15,76 @@ In computational biology, code is read and audited far more frequently than it i
 
 A function is a self-contained computational unit designed around the **Single Responsibility Principle (SRP)**: it accepts explicit inputs, performs a single transformation, and returns an explicit result without mutating external state.
 
-```
-+---------------------------------------------------------------------------------------------------+
-|                                      Caller Scope (main.py)                                       |
-|                                                                                                   |
-|  raw_records = load_fasta("samples.fa")                                                           |
-|                       |                                                                           |
-|                       v Passes arguments (by reference)                                           |
-|  +---------------------------------------------------------------------------------------------+  |
-|  |                             Function Scope: filter_short_reads()                            |  |
-|  |                                                                                             |  |
-|  |   Inputs: (records: list[str], min_length: int = 100)                                       |  |
-|  |                                                                                             |  |
-|  |   +--------------------------+    List Comprehension    +-------------------------------+  |  |
-|  |   | Local Stack Frame        | -----------------------> | Filtered In-Memory Subset     |  |  |
-|  |   | - Isolated local vars    |                          | - No mutation of raw_records  |  |  |
-|  |   +--------------------------+                          +-------------------------------+  |  |
-|  |                                                                        |                    |  |
-|  |                                                                        v Returns result     |  |
-|  +---------------------------------------------------------------------------------------------+  |
-|                       |                                                                           |
-|                       v                                                                           |
-|  filtered_records = <Returned list>                                                               |
-+---------------------------------------------------------------------------------------------------+
-```
+<!-- Modular Function Scope Isolation Schematic -->
+<svg viewBox="0 0 780 270" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-blue-func" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-green-func" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="780" height="270" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Outer Box: Caller Scope (main.py) -->
+  <g transform="translate(25, 18)">
+    <rect width="730" height="234" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="730" height="26" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="20" y="18" font-size="12" font-weight="700" fill="#1d4ed8">Caller Scope (<tspan font-family="monospace">main.py</tspan>)</text>
+
+    <!-- Caller Left: Input Data -->
+    <g transform="translate(20, 36)">
+      <rect width="200" height="42" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="100" y="20" text-anchor="middle" font-size="11" font-family="monospace" fill="#0f172a">raw_records = [...]</text>
+      <text x="100" y="34" text-anchor="middle" font-size="9" fill="#64748b">1,000,000 FASTQ records</text>
+    </g>
+
+    <!-- Caller Right: Output Assigned -->
+    <g transform="translate(510, 36)">
+      <rect width="200" height="42" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="100" y="20" text-anchor="middle" font-size="11" font-family="monospace" fill="#166534">filtered = &lt;result&gt;</text>
+      <text x="100" y="34" text-anchor="middle" font-size="9" fill="#15803d">Clean isolated assignment</text>
+    </g>
+
+    <!-- Argument Passing Arrow -->
+    <path d="M 120 80 L 120 100" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue-func)"/>
+    <text x="130" y="94" font-size="9" font-weight="600" fill="#2563eb">Pass (records, min_len=100)</text>
+
+    <!-- Result Return Arrow -->
+    <path d="M 610 100 L 610 80" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green-func)"/>
+    <text x="620" y="94" font-size="9" font-weight="600" fill="#059669">Returns explicit list</text>
+
+    <!-- Inner Function Scope Box -->
+    <g transform="translate(20, 102)">
+      <rect width="690" height="118" rx="8" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+      <rect width="690" height="24" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+      <text x="345" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#065f46">Function Scope: <tspan font-family="monospace">filter_short_reads(records, min_length=100) -&gt; list[str]</tspan></text>
+
+      <!-- Sub-box 1: Local Stack Frame -->
+      <g transform="translate(15, 34)">
+        <rect width="300" height="68" rx="5" fill="#ffffff" stroke="#86efac"/>
+        <text x="150" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Isolated Local Stack Frame</text>
+        <text x="150" y="38" text-anchor="middle" font-size="10" fill="#334155">• Local vars: <tspan font-family="monospace">min_len</tspan>, <tspan font-family="monospace">rec</tspan>, <tspan font-family="monospace">out</tspan></text>
+        <text x="150" y="54" text-anchor="middle" font-size="9" fill="#64748b">Popped on return (Zero global state leakage)</text>
+      </g>
+
+      <!-- Middle transform arrow -->
+      <path d="M 325 68 L 365 68" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green-func)"/>
+      <text x="345" y="60" text-anchor="middle" font-size="8" font-weight="600" fill="#059669">Transform</text>
+
+      <!-- Sub-box 2: Pure In-Memory Transformation -->
+      <g transform="translate(375, 34)">
+        <rect width="300" height="68" rx="5" fill="#ffffff" stroke="#86efac"/>
+        <text x="150" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Pure Algorithmic Transformation</text>
+        <text x="150" y="38" text-anchor="middle" font-size="10" fill="#334155">• Generates new filtered memory records</text>
+        <text x="150" y="54" text-anchor="middle" font-size="9" fill="#15803d">Deterministic: Identical input ➔ Identical output</text>
+      </g>
+    </g>
+  </g>
+</svg>
 
 ### Why Write Functions?
 1. **Scope Encapsulation**: Variables defined inside a function exist only on the call stack during execution. They cannot leak into or accidentally overwrite global variables.

@@ -1,6 +1,6 @@
 # Computational Biology Bridging Program — Progress & Handover Note
 
-*Last updated: 2026-08-18*
+*Last updated: 2026-08-22*
 
 This document tracks the design philosophy, completed courses, and roadmap for the **Life Sciences to Computational Biology Bridging Curriculum**.
 

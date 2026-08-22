@@ -15,27 +15,70 @@ One of the most persistent failure modes in computational biology is **dependenc
 
 By default, executing `pip install <package>` installs libraries directly into the operating system's global Python environment. When different research projects require conflicting versions of shared dependencies, global installation triggers catastrophic version collisions.
 
-```
-+---------------------------------------------------------------------------------------------------+
-|                                     Global Operating System                                       |
-|                                                                                                   |
-|  +-------------------------------------+                 +-------------------------------------+  |
-|  |     Project A: Single-Cell RNA      |                 |     Project B: Structural Docking   |  |
-|  |                                     |                 |                                     |  |
-|  |  Isolated Virtual Environment (.venv|                 |  Isolated Conda Environment (docking|  |
-|  |  +-------------------------------+  |                 |  +-------------------------------+  |  |
-|  |  | Python 3.11 Interpreter       |  |                 |  | Python 3.10 Interpreter       |  |  |
-|  |  | - site-packages/              |  |                 |  | - site-packages/ (PyRosetta)  |  |  |
-|  |  |   - scanpy==1.9.3             |  |                 |  | - C/C++ Shared Libs (libstdc++)|  |
-|  |  |   - numpy==1.24.4             |  |                 |  | - Compiled tools (openbabel)  |  |  |
-|  |  +-------------------------------+  |                 |  +-------------------------------+  |  |
-|  |                  |                  |                 |                  |                  |  |
-|  |                  v                  |                 |                  v                  |  |
-|  |     Declared via pyproject.toml     |                 |    Declared via environment.yml     |  |
-|  |        Locked via uv.lock           |                 |        Locked via conda-lock        |  |
-|  +-------------------------------------+                 +-------------------------------------+  |
-+---------------------------------------------------------------------------------------------------+
-```
+<!-- Environment Isolation Architecture Schematic -->
+<svg viewBox="0 0 780 290" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <!-- Background Canvas: Global OS -->
+  <rect width="780" height="290" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+  <rect width="780" height="28" rx="10" fill="#334155"/>
+  <text x="20" y="19" font-size="12" font-weight="700" fill="#ffffff">Global Operating System &amp; System Python Environment</text>
+  <text x="760" y="19" text-anchor="end" font-size="10" font-weight="600" fill="#fca5a5">⚠️ Avoid global pip install</text>
+
+  <!-- Left: Project A (.venv / uv) -->
+  <g transform="translate(25, 42)">
+    <rect width="350" height="232" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="350" height="26" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="175" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">Project A: Single-Cell RNA (<tspan font-family="monospace">uv</tspan>)</text>
+
+    <!-- Inner Env Details -->
+    <g transform="translate(15, 34)">
+      <rect width="320" height="110" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="12" y="20" font-size="10" font-weight="700" fill="#1e293b">Isolated Virtual Environment (<tspan font-family="monospace" fill="#2563eb">.venv/</tspan>):</text>
+      <text x="12" y="38" font-size="10" fill="#334155">• Python 3.11 Interpreter</text>
+      <text x="12" y="56" font-size="10" fill="#334155">• <tspan font-family="monospace">site-packages/</tspan>:</text>
+      <text x="24" y="74" font-size="9" font-family="monospace" fill="#0369a1">- scanpy==1.9.3, numpy==1.24.4</text>
+      <text x="24" y="90" font-size="9" font-family="monospace" fill="#0369a1">- scipy==1.11.2, matplotlib==3.7.1</text>
+
+      <!-- Manifest & Lockfile -->
+      <g transform="translate(0, 116)">
+        <rect width="320" height="34" rx="4" fill="#eff6ff" stroke="#93c5fd"/>
+        <text x="160" y="15" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">Declared: <tspan font-family="monospace">pyproject.toml</tspan></text>
+        <text x="160" y="28" text-anchor="middle" font-size="9" font-weight="700" fill="#2563eb">Locked &amp; Hashed: <tspan font-family="monospace">uv.lock</tspan></text>
+      </g>
+
+      <!-- Bottom badge -->
+      <rect x="0" y="156" width="320" height="28" rx="4" fill="#dbeafe"/>
+      <text x="160" y="174" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Ultra-Fast Rust Dependency Solver</text>
+    </g>
+  </g>
+
+  <!-- Right: Project B (Conda / Mamba) -->
+  <g transform="translate(405, 42)">
+    <rect width="350" height="232" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="350" height="26" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="175" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#047857">Project B: Structural Docking (<tspan font-family="monospace">conda</tspan>)</text>
+
+    <!-- Inner Env Details -->
+    <g transform="translate(15, 34)">
+      <rect width="320" height="110" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="12" y="20" font-size="10" font-weight="700" fill="#1e293b">Isolated Conda Environment (<tspan font-family="monospace" fill="#059669">docking_env/</tspan>):</text>
+      <text x="12" y="38" font-size="10" fill="#334155">• Python 3.10 Interpreter</text>
+      <text x="12" y="56" font-size="10" fill="#334155">• Compiled C/C++ Bioinformatics Tools:</text>
+      <text x="24" y="74" font-size="9" font-family="monospace" fill="#047857">- bwa==0.7.17, samtools==1.19</text>
+      <text x="24" y="90" font-size="9" font-family="monospace" fill="#047857">- pyrosetta==2023.15, libstdc++</text>
+
+      <!-- Manifest & Lockfile -->
+      <g transform="translate(0, 116)">
+        <rect width="320" height="34" rx="4" fill="#ecfdf5" stroke="#86efac"/>
+        <text x="160" y="15" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">Declared: <tspan font-family="monospace">environment.yml</tspan></text>
+        <text x="160" y="28" text-anchor="middle" font-size="9" font-weight="700" fill="#059669">Locked: <tspan font-family="monospace">conda-lock.yml</tspan></text>
+      </g>
+
+      <!-- Bottom badge -->
+      <rect x="0" y="156" width="320" height="28" rx="4" fill="#d1fae5"/>
+      <text x="160" y="174" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">Manages Non-Python System Binaries</text>
+    </g>
+  </g>
+</svg>
 
 An **Isolated Environment** is a self-contained directory tree housing an independent Python binary and a dedicated `site-packages/` directory. When an environment is activated, the shell's `$PATH` variable is prepended with the environment's `bin/` directory, redirecting all package lookups away from global system paths.
 

@@ -17,17 +17,91 @@ Understanding operating system architectures, terminal environments, and shell i
 
 An **Operating System (OS)** is the core system software that sits between physical hardware (CPU, RAM, storage) and user applications.
 
-```
-+-----------------------------------------------------------------------+
-| User Space: Applications, Python, Aligners, Compilers, Shells         |
-+-----------------------------------------------------------------------+
-| System Call Interface (POSIX API, Win32 API)                          |
-+-----------------------------------------------------------------------+
-| Kernel: Process Scheduler, Virtual Memory Manager, File System Drivers|
-+-----------------------------------------------------------------------+
-| Hardware: CPU, RAM, GPU, NVMe SSD, Network Controller                 |
-+-----------------------------------------------------------------------+
-```
+<!-- Operating System Architecture and Layering Schematic -->
+<svg viewBox="0 0 780 290" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-slate-os" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+    </marker>
+    <marker id="arrow-blue-os" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-green-os" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="780" height="290" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Layer 1: User Space (Ring 3) -->
+  <g transform="translate(25, 20)">
+    <rect width="730" height="52" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="730" height="22" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="365" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">User Space (Unprivileged Mode — Ring 3)</text>
+    <text x="365" y="40" text-anchor="middle" font-size="11" fill="#334155">
+      Python / R Scripts • Bioinformatics Binaries (<tspan font-family="monospace">bwa</tspan>, <tspan font-family="monospace">samtools</tspan>) • Compilers (<tspan font-family="monospace">gcc</tspan>, <tspan font-family="monospace">rustc</tspan>) • Shell Interpreters (<tspan font-family="monospace">bash</tspan>, <tspan font-family="monospace">zsh</tspan>)
+    </text>
+  </g>
+
+  <!-- System Call Bridge Indicator -->
+  <g transform="translate(25, 80)">
+    <rect width="730" height="34" rx="6" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="365" y="21" text-anchor="middle" font-size="11" font-weight="700" fill="#6d28d9">
+      System Call Interface (POSIX API: <tspan font-family="monospace">fork()</tspan>, <tspan font-family="monospace">read()</tspan>, <tspan font-family="monospace">write()</tspan>, <tspan font-family="monospace">socket()</tspan> | Win32 API: <tspan font-family="monospace">CreateProcess()</tspan>)
+    </text>
+  </g>
+
+  <!-- Layer 2: Kernel Space (Ring 0) -->
+  <g transform="translate(25, 122)">
+    <rect width="730" height="74" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="730" height="22" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="365" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#047857">Operating System Kernel (Privileged Supervisor Mode — Ring 0)</text>
+    
+    <!-- 4 Kernel Sub-modules -->
+    <g transform="translate(15, 30)">
+      <rect x="0" y="0" width="165" height="34" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="82" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">Process Scheduler</text>
+      <text x="82" y="27" text-anchor="middle" font-size="9" fill="#15803d">CPU Thread Allocation</text>
+
+      <rect x="178" y="0" width="165" height="34" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="260" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">Virtual Memory Manager</text>
+      <text x="260" y="27" text-anchor="middle" font-size="9" fill="#15803d">RAM Pages &amp; Swap</text>
+
+      <rect x="356" y="0" width="165" height="34" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="438" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">Virtual File System (VFS)</text>
+      <text x="438" y="27" text-anchor="middle" font-size="9" fill="#15803d">ext4, APFS, NTFS Drivers</text>
+
+      <rect x="534" y="0" width="165" height="34" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="616" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">Device &amp; Network Stack</text>
+      <text x="616" y="27" text-anchor="middle" font-size="9" fill="#15803d">TCP/IP, PCIe, GPU Drivers</text>
+    </g>
+  </g>
+
+  <!-- Layer 3: Physical Hardware -->
+  <g transform="translate(25, 204)">
+    <rect width="730" height="66" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+    <rect width="730" height="22" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5"/>
+    <text x="365" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Physical Hardware Components</text>
+    
+    <g transform="translate(15, 28)">
+      <rect x="0" y="0" width="132" height="28" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="66" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">CPU &amp; SMT Cores</text>
+
+      <rect x="142" y="0" width="132" height="28" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="208" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">System RAM (DDR5)</text>
+
+      <rect x="284" y="0" width="132" height="28" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="350" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">NVMe / SSD Storage</text>
+
+      <rect x="426" y="0" width="132" height="28" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="492" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">Network Controller (NIC)</text>
+
+      <rect x="568" y="0" width="132" height="28" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="634" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">GPU Accelerators</text>
+    </g>
+  </g>
+</svg>
 
 * **The Kernel**: The privileged core of the OS that controls hardware access, allocates memory pages, and switches execution between CPU threads.
 * **The System Call Interface**: The standardized API through which programs request kernel services (e.g., allocating memory, reading a file, opening a network socket).
@@ -49,20 +123,81 @@ Yes. An operating system is software and is distributed digitally through severa
 
 Operating systems differ fundamentally in their kernel architectures, file system designs, and system call interfaces:
 
-```
-                  [ Operating System Architectures ]
-                                  |
-         +------------------------+------------------------+
-         |                                                 |
-  [ Unix Family ]                                    [ Windows NT ]
-         |                                                 |
-  +------+------+                                   - Proprietary kernel
-  |             |                                   - Drive letters (C:\)
-[ Linux ]   [ macOS / Darwin ]                      - Backslash paths (\)
-- Ubuntu    - BSD/POSIX foundation                  - Case-insensitive
-- Rocky/RHEL- Mach kernel + POSIX layer             - CRLF line endings (\r\n)
-- Debian    - Native Unix Terminal                  - Win32 system calls
-```
+<!-- Operating System Lineage and Architectural Divergence Schematic -->
+<svg viewBox="0 0 780 320" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <!-- Background Canvas -->
+  <rect width="780" height="320" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Left: Unix Lineage (POSIX) -->
+  <g transform="translate(25, 20)">
+    <rect width="350" height="280" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="350" height="32" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="175" y="21" text-anchor="middle" font-size="13" font-weight="700" fill="#047857">Unix Lineage (POSIX Standard, 1970s)</text>
+
+    <!-- Sub-boxes: Linux & macOS -->
+    <g transform="translate(15, 44)">
+      <rect x="0" y="0" width="155" height="52" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="77" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Linux (Monolithic)</text>
+      <text x="77" y="32" text-anchor="middle" font-size="9" fill="#15803d">Ubuntu • Rocky/RHEL • Debian</text>
+      <text x="77" y="44" text-anchor="middle" font-size="9" fill="#15803d">HPC &amp; Server Standard</text>
+
+      <rect x="165" y="0" width="155" height="52" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="242" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">macOS (Darwin Core)</text>
+      <text x="242" y="32" text-anchor="middle" font-size="9" fill="#15803d">Mach Kernel + BSD Layer</text>
+      <text x="242" y="44" text-anchor="middle" font-size="9" fill="#15803d">Certified UNIX 03</text>
+    </g>
+
+    <!-- Architecture Details -->
+    <g transform="translate(15, 106)">
+      <rect width="320" height="110" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="14" y="22" font-size="11" font-weight="600" fill="#334155">• Binary Format: <tspan font-family="monospace" fill="#047857">ELF</tspan> (Linux), <tspan font-family="monospace" fill="#047857">Mach-O</tspan> (macOS)</text>
+      <text x="14" y="42" font-size="11" font-weight="600" fill="#334155">• Path Separator: Forward slash <tspan font-family="monospace" fill="#047857">/</tspan> (Root: <tspan font-family="monospace">/</tspan>)</text>
+      <text x="14" y="62" font-size="11" font-weight="600" fill="#334155">• Line Endings: Line Feed <tspan font-family="monospace" fill="#047857">LF (\n, 0x0A)</tspan></text>
+      <text x="14" y="82" font-size="11" font-weight="600" fill="#334155">• Case Sensitivity: <tspan fill="#047857">Strictly Case-Sensitive</tspan> (Linux)</text>
+      <text x="14" y="102" font-size="11" font-weight="600" fill="#334155">• Core API: Standard POSIX Streams &amp; Pipes</text>
+    </g>
+
+    <!-- Strengths pill -->
+    <rect x="15" y="224" width="320" height="42" rx="4" fill="#d1fae5"/>
+    <text x="175" y="242" text-anchor="middle" font-size="11" font-weight="700" fill="#065f46">Universal Scientific Standard</text>
+    <text x="175" y="256" text-anchor="middle" font-size="9" fill="#047857">&gt; 95% of bioinformatics software developed natively</text>
+  </g>
+
+  <!-- Right: Windows NT Lineage -->
+  <g transform="translate(405, 20)">
+    <rect width="350" height="280" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="350" height="32" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="175" y="21" text-anchor="middle" font-size="13" font-weight="700" fill="#1d4ed8">Windows NT Lineage (Win32 API, 1990s)</text>
+
+    <!-- Sub-boxes: Native Windows & WSL2 -->
+    <g transform="translate(15, 44)">
+      <rect x="0" y="0" width="155" height="52" rx="5" fill="#eff6ff" stroke="#93c5fd"/>
+      <text x="77" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Windows 11 / Server</text>
+      <text x="77" y="32" text-anchor="middle" font-size="9" fill="#1e40af">Object-Oriented NT Kernel</text>
+      <text x="77" y="44" text-anchor="middle" font-size="9" fill="#1e40af">Win32 API &amp; GUI Handles</text>
+
+      <rect x="165" y="0" width="155" height="52" rx="5" fill="#f5f3ff" stroke="#c4b5fd"/>
+      <text x="242" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#6d28d9">WSL2 Subsystem</text>
+      <text x="242" y="32" text-anchor="middle" font-size="9" fill="#6d28d9">Hyper-V Linux Kernel</text>
+      <text x="242" y="44" text-anchor="middle" font-size="9" fill="#6d28d9">Native POSIX on Windows</text>
+    </g>
+
+    <!-- Architecture Details -->
+    <g transform="translate(15, 106)">
+      <rect width="320" height="110" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="14" y="22" font-size="11" font-weight="600" fill="#334155">• Binary Format: Portable Executable (<tspan font-family="monospace" fill="#1d4ed8">PE / .exe</tspan>)</text>
+      <text x="14" y="42" font-size="11" font-weight="600" fill="#334155">• Path Separator: Backslash <tspan font-family="monospace" fill="#1d4ed8">\</tspan> (Drives: <tspan font-family="monospace">C:\</tspan>)</text>
+      <text x="14" y="62" font-size="11" font-weight="600" fill="#334155">• Line Endings: Carriage Return + LF <tspan font-family="monospace" fill="#1d4ed8">CRLF (\r\n)</tspan></text>
+      <text x="14" y="82" font-size="11" font-weight="600" fill="#334155">• Case Sensitivity: <tspan fill="#1d4ed8">Case-Insensitive / Preserving</tspan></text>
+      <text x="14" y="102" font-size="11" font-weight="600" fill="#334155">• Core API: Object handles, COM &amp; Event Messages</text>
+    </g>
+
+    <!-- Bridge pill -->
+    <rect x="15" y="224" width="320" height="42" rx="4" fill="#ede9fe"/>
+    <text x="175" y="242" text-anchor="middle" font-size="11" font-weight="700" fill="#5b21b6">The Compatibility Bridge: WSL2</text>
+    <text x="175" y="256" text-anchor="middle" font-size="9" fill="#6d28d9">Runs authentic Linux ELF binaries seamlessly on Windows</text>
+  </g>
+</svg>
 
 ### A Brief Historical Divergence: Unix vs. Windows NT
 Why are operating systems so sharply divided today?
@@ -102,15 +237,65 @@ A common source of confusion on Windows is the presence of multiple command-line
 * **Terminal Emulator** (e.g., *Windows Terminal*, *PuTTY*, *iTerm2*, *Alacritty*): The graphical application that opens a window, captures keyboard input, and renders text on screen.
 * **Shell** (e.g., *Command Prompt*, *PowerShell*, *Bash*, *Zsh*): The background program running inside the terminal that interprets text commands, executes scripts, and manages processes.
 
-```
-+-----------------------------------------------------------------------+
-| Windows Terminal (Graphical Window / Display Host)                   |
-|                                                                       |
-|  [Tab 1: cmd.exe]    [Tab 2: PowerShell]    [Tab 3: WSL2 Ubuntu Bash] |
-|  - MS-DOS Legacy     - Object-Oriented      - Genuine Linux Kernel    |
-|  - 'dir', 'copy'     - Cmdlets & Objects    - 'ls -la', 'grep', POSIX |
-+-----------------------------------------------------------------------+
-```
+<!-- Windows Terminal Host vs Inner Shells Architecture Schematic -->
+<svg viewBox="0 0 780 270" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <!-- Outer Window: Terminal Emulator -->
+  <rect width="780" height="270" rx="10" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+  
+  <!-- Window Header / Tabs Bar -->
+  <rect width="780" height="36" rx="10" fill="#0f172a"/>
+  <!-- Window control buttons -->
+  <circle cx="20" cy="18" r="5.5" fill="#ef4444"/>
+  <circle cx="36" cy="18" r="5.5" fill="#f59e0b"/>
+  <circle cx="52" cy="18" r="5.5" fill="#10b981"/>
+  <text x="75" y="22" font-size="11" font-weight="600" fill="#94a3b8">Windows Terminal (Graphical Display Host / Window Manager)</text>
+
+  <!-- Tabs -->
+  <g transform="translate(25, 45)">
+    <!-- Tab 1: cmd.exe -->
+    <rect x="0" y="0" width="230" height="205" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="0" y="0" width="230" height="28" rx="6" fill="#1e293b"/>
+    <text x="115" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#f1f5f9">Tab 1: cmd.exe</text>
+    <text x="15" y="52" font-size="11" font-weight="600" fill="#94a3b8">Type: <tspan fill="#cbd5e1">Legacy Windows Shell</tspan></text>
+    <text x="15" y="74" font-size="11" fill="#cbd5e1">• MS-DOS syntax lineage</text>
+    <text x="15" y="96" font-size="11" fill="#cbd5e1">• Built-ins: <tspan font-family="monospace" fill="#38bdf8">dir</tspan>, <tspan font-family="monospace" fill="#38bdf8">copy</tspan>, <tspan font-family="monospace" fill="#38bdf8">type</tspan></text>
+    <text x="15" y="118" font-size="11" fill="#cbd5e1">• No POSIX compliance</text>
+    <text x="15" y="140" font-size="11" fill="#cbd5e1">• No raw byte pipes</text>
+    
+    <rect x="12" y="160" width="206" height="32" rx="4" fill="#334155"/>
+    <text x="115" y="180" text-anchor="middle" font-size="10" font-weight="600" fill="#fca5a5">Avoid for scientific code</text>
+  </g>
+
+  <!-- Tab 2: PowerShell -->
+  <g transform="translate(275, 45)">
+    <rect x="0" y="0" width="230" height="205" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="0" y="0" width="230" height="28" rx="6" fill="#1e3a8a"/>
+    <text x="115" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#93c5fd">Tab 2: PowerShell (pwsh)</text>
+    <text x="15" y="52" font-size="11" font-weight="600" fill="#94a3b8">Type: <tspan fill="#cbd5e1">.NET Object Shell</tspan></text>
+    <text x="15" y="74" font-size="11" fill="#cbd5e1">• Microsoft .NET runtime</text>
+    <text x="15" y="96" font-size="11" fill="#cbd5e1">• Passes structured objects</text>
+    <text x="15" y="118" font-size="11" fill="#cbd5e1">• <tspan font-family="monospace" fill="#60a5fa">ls</tspan> is alias for <tspan font-family="monospace" fill="#60a5fa">Get-ChildItem</tspan></text>
+    <text x="15" y="140" font-size="11" fill="#cbd5e1">• Windows system admin</text>
+    
+    <rect x="12" y="160" width="206" height="32" rx="4" fill="#1e293b"/>
+    <text x="115" y="180" text-anchor="middle" font-size="10" font-weight="600" fill="#93c5fd">Windows automation</text>
+  </g>
+
+  <!-- Tab 3: WSL2 Ubuntu -->
+  <g transform="translate(525, 45)">
+    <rect x="0" y="0" width="230" height="205" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+    <rect x="0" y="0" width="230" height="28" rx="6" fill="#064e3b"/>
+    <text x="115" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#6ee7b7">Tab 3: WSL2 (Ubuntu Bash)</text>
+    <text x="15" y="52" font-size="11" font-weight="600" fill="#94a3b8">Type: <tspan fill="#cbd5e1">Genuine Linux Kernel</tspan></text>
+    <text x="15" y="74" font-size="11" fill="#cbd5e1">• Hyper-V Linux VM engine</text>
+    <text x="15" y="96" font-size="11" fill="#cbd5e1">• Executes native ELF binaries</text>
+    <text x="15" y="118" font-size="11" fill="#cbd5e1">• Full POSIX stream pipes (<tspan font-family="monospace" fill="#34d399">|</tspan>)</text>
+    <text x="15" y="140" font-size="11" fill="#cbd5e1">• <tspan font-family="monospace" fill="#34d399">/bin/bash</tspan>, <tspan font-family="monospace" fill="#34d399">apt</tspan>, <tspan font-family="monospace" fill="#34d399">bwa</tspan>, <tspan font-family="monospace" fill="#34d399">samtools</tspan></text>
+    
+    <rect x="12" y="160" width="206" height="32" rx="4" fill="#065f46"/>
+    <text x="115" y="180" text-anchor="middle" font-size="10" font-weight="700" fill="#a7f3d0">Recommended for Science</text>
+  </g>
+</svg>
 
 ### Windows Command-Line Ecosystem Breakdown
 
@@ -128,18 +313,71 @@ A common source of confusion on Windows is the presence of multiple command-line
 
 When typing a command like `ls` or `pwd`, the terminal's behavior depends on whether the command is a **Shell Built-in** or an **External Executable**, and how that specific shell resolves aliases.
 
-```
-Command Typed: 'ls'
-       |
-       +---> In cmd.exe --------> [Error: 'ls' is not recognized]
-       |                          (cmd.exe expects the built-in 'dir')
-       |
-       +---> In PowerShell ------> [Alias: maps 'ls' -> 'Get-ChildItem']
-       |                          (Outputs .NET System.IO.DirectoryInfo objects)
-       |
-       +---> In Linux/WSL2/macOS -> [Executes POSIX /bin/ls binary]
-                                  (Streams raw newline-delimited text characters)
-```
+<!-- Command Resolution Flow Across Different Shells Schematic -->
+<svg viewBox="0 0 780 260" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-red-cmd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-blue-cmd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-green-cmd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="780" height="260" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Command Input Header Box -->
+  <g transform="translate(240, 15)">
+    <rect width="300" height="38" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="150" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#38bdf8" font-family="monospace">User Enters Command: $ ls</text>
+  </g>
+
+  <!-- Branch 1: cmd.exe -->
+  <path d="M 310 53 L 140 85" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red-cmd)"/>
+  <g transform="translate(25, 88)">
+    <rect width="230" height="152" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="1.5"/>
+    <rect width="230" height="26" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="115" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">In cmd.exe</text>
+    <text x="12" y="48" font-size="11" fill="#334155">1. Checks built-in table: <tspan fill="#dc2626">Miss</tspan></text>
+    <text x="12" y="68" font-size="11" fill="#334155">2. Scans %PATH% for <tspan font-family="monospace">ls.exe</tspan>: <tspan fill="#dc2626">Miss</tspan></text>
+    <rect x="10" y="80" width="210" height="38" rx="4" fill="#fef2f2" stroke="#fca5a5"/>
+    <text x="115" y="96" text-anchor="middle" font-size="10" font-weight="600" fill="#991b1b">'ls' is not recognized</text>
+    <text x="115" y="110" text-anchor="middle" font-size="9" fill="#b91c1c">Requires legacy 'dir'</text>
+    <text x="115" y="136" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">Execution Fails (Exit != 0)</text>
+  </g>
+
+  <!-- Branch 2: PowerShell -->
+  <path d="M 390 53 L 390 85" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue-cmd)"/>
+  <g transform="translate(275, 88)">
+    <rect width="230" height="152" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="230" height="26" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="115" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#1d4ed8">In PowerShell (pwsh)</text>
+    <text x="12" y="48" font-size="11" fill="#334155">1. Resolves shell alias table</text>
+    <text x="12" y="68" font-size="11" fill="#334155">2. Maps <tspan font-family="monospace">ls</tspan> ➔ <tspan font-family="monospace" fill="#1d4ed8">Get-ChildItem</tspan></text>
+    <rect x="10" y="80" width="210" height="38" rx="4" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="115" y="96" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">Outputs .NET Object Stream</text>
+    <text x="115" y="110" text-anchor="middle" font-size="9" fill="#1d4ed8">System.IO.DirectoryInfo[]</text>
+    <text x="115" y="136" text-anchor="middle" font-size="10" font-weight="600" fill="#2563eb">Object Pipe (Not Raw Text)</text>
+  </g>
+
+  <!-- Branch 3: Linux / macOS / WSL2 -->
+  <path d="M 470 53 L 640 85" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green-cmd)"/>
+  <g transform="translate(525, 88)">
+    <rect width="230" height="152" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="230" height="26" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="115" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">In Linux / macOS / WSL2</text>
+    <text x="12" y="48" font-size="11" fill="#334155">1. Scans $PATH directories</text>
+    <text x="12" y="68" font-size="11" fill="#334155">2. Executes <tspan font-family="monospace" fill="#047857">/bin/ls</tspan> binary</text>
+    <rect x="10" y="80" width="210" height="38" rx="4" fill="#ecfdf5" stroke="#a7f3d0"/>
+    <text x="115" y="96" text-anchor="middle" font-size="10" font-weight="600" fill="#065f46">Outputs POSIX Byte Stream</text>
+    <text x="115" y="110" text-anchor="middle" font-size="9" fill="#047857">Raw ASCII/UTF-8 (\n separated)</text>
+    <text x="115" y="136" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">Composable with Pipes (|)</text>
+  </g>
+</svg>
 
 ### 1. Shell Built-ins vs. `$PATH` Executables
 * **Shell Built-in**: A command implemented directly inside the shell's own code (e.g., `cd`, `exit`, `echo`). It does not require launching a separate process.

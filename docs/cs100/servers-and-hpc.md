@@ -17,23 +17,90 @@ To analyze large-scale data, computational work shifts to **remote servers**, **
 
 A **server** is not a mystical entity; it is physically a computer designed for continuous, high-throughput computation rather than interactive desktop use.
 
-```
-+-----------------------------------------------------------------------+
-| Climate-Controlled Server Rack (Data Center)                         |
-|                                                                       |
-|  [ Rack Unit 1: Compute Node (128 Cores, 512 GB RAM, Dual 10GbE Fiber)]|
-|  [ Rack Unit 2: GPU Node     (8x NVIDIA H100 GPUs, 1 TB RAM)          ]|
-|  [ Rack Unit 3: Storage Array(10 Petabytes NVMe/HDD Lustre File System)]|
-+-----------------------------------------------------------------------+
-                                  ^
-                                  | 10 - 100 Gbps High-Speed Wired Fiber
-                                  v
-                    [ Institutional Network Gateway ]
-                                  ^
-                                  | Encrypted Internet Tunnel (SSH)
-                                  v
-                   [ Your Local Laptop / Workstation ]
-```
+<!-- Server Physical Architecture & Networking Pipeline Schematic -->
+<svg viewBox="0 0 780 280" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-blue-hpc" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-emerald-hpc" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="780" height="280" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Left: Data Center Rack -->
+  <g transform="translate(25, 20)">
+    <rect width="280" height="240" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+    <rect width="280" height="28" rx="8" fill="#1e293b"/>
+    <text x="140" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#f8fafc">Data Center Rack (Headless Nodes)</text>
+
+    <!-- Rack Unit 1: Compute Node -->
+    <g transform="translate(12, 38)">
+      <rect width="256" height="56" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+      <text x="12" y="20" font-size="11" font-weight="700" fill="#1e293b">1U Compute Node (Worker)</text>
+      <text x="12" y="36" font-size="10" fill="#475569">• 128 Cores (Dual EPYC/Xeon)</text>
+      <text x="12" y="48" font-size="10" fill="#64748b">• 512 GB – 1.5 TB DDR5 RAM</text>
+    </g>
+
+    <!-- Rack Unit 2: GPU Node -->
+    <g transform="translate(12, 102)">
+      <rect width="256" height="56" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+      <text x="12" y="20" font-size="11" font-weight="700" fill="#166534">4U Accelerator / AI Node</text>
+      <text x="12" y="36" font-size="10" fill="#15803d">• 8× NVIDIA H100 GPUs (640 GB VRAM)</text>
+      <text x="12" y="48" font-size="10" fill="#15803d">• Deep Learning &amp; Cryo-EM</text>
+    </g>
+
+    <!-- Rack Unit 3: Storage Array -->
+    <g transform="translate(12, 166)">
+      <rect width="256" height="62" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+      <text x="12" y="20" font-size="11" font-weight="700" fill="#1e40af">Storage Array (Lustre / GPFS)</text>
+      <text x="12" y="36" font-size="10" fill="#1d4ed8">• Petabytes NVMe + High-Capacity HDD</text>
+      <text x="12" y="48" font-size="10" fill="#64748b">• Shared across all cluster nodes</text>
+    </g>
+  </g>
+
+  <!-- Middle: Network Infrastructure -->
+  <g transform="translate(325, 45)">
+    <!-- Fiber Cable Pipeline -->
+    <path d="M 0 50 L 110 50" stroke="#059669" stroke-width="3" marker-end="url(#arrow-emerald-hpc)"/>
+    <path d="M 110 70 L 0 70" stroke="#059669" stroke-width="3" marker-end="url(#arrow-emerald-hpc)"/>
+    <text x="55" y="38" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">10–100 Gbps Fiber</text>
+    <text x="55" y="90" text-anchor="middle" font-size="9" fill="#64748b">Wired Low Latency</text>
+
+    <!-- Institutional Gateway Box -->
+    <g transform="translate(20, 115)">
+      <rect width="90" height="75" rx="6" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+      <rect width="90" height="22" rx="6" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="45" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#6d28d9">Campus Gateway</text>
+      <text x="45" y="42" text-anchor="middle" font-size="9" fill="#475569">Firewall</text>
+      <text x="45" y="56" text-anchor="middle" font-size="9" fill="#475569">VPN / Bastion</text>
+      <text x="45" y="70" text-anchor="middle" font-size="9" font-weight="600" fill="#6d28d9">Port 22 (SSH)</text>
+    </g>
+  </g>
+
+  <!-- Connection to Client -->
+  <path d="M 455 152 L 495 152" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-blue-hpc)"/>
+  <path d="M 495 168 L 455 168" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-blue-hpc)"/>
+
+  <!-- Right: Local Laptop -->
+  <g transform="translate(500, 45)">
+    <rect width="255" height="190" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="255" height="28" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="127" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">Local Laptop / Workstation</text>
+
+    <text x="16" y="55" font-size="11" font-weight="600" fill="#334155">• Interactive Code Editing (IDE)</text>
+    <text x="16" y="76" font-size="11" fill="#475569">• Prototyping on small datasets</text>
+    <text x="16" y="97" font-size="11" fill="#475569">• Plot rendering &amp; figure inspection</text>
+    <text x="16" y="118" font-size="11" fill="#64748b">• Limited: 8–32 GB RAM, 4–16 Cores</text>
+
+    <rect x="14" y="136" width="227" height="40" rx="5" fill="#dbeafe"/>
+    <text x="127" y="154" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Encrypted SSH Tunnel</text>
+    <text x="127" y="168" text-anchor="middle" font-size="9" fill="#1d4ed8">Transmits keystrokes &amp; receives text</text>
+  </g>
+</svg>
 
 ### Physical Architecture
 * **Headless Design**: Servers have no monitors, keyboards, mice, or sound cards. They are thin, metal blade units (1U or 2U form factors) mounted inside standard 19-inch racks within climate-controlled, backup-powered data centers.
@@ -68,13 +135,75 @@ Choosing where to execute code is an engineering decision based on dataset scale
 
 When you type `ssh username@server.edu` in your terminal, how does your local machine talk to the remote server?
 
-```
-+-------------------+         Encrypted Network Tunnel (Port 22)        +--------------------+
-| Local Laptop      | ------------------------------------------------> | Remote Server      |
-| - SSH Client      |   Keystrokes encrypted & sent over internet       | - SSH Daemon (sshd)|
-| - Terminal Window | <------------------------------------------------ | - Shell (Bash/Zsh) |
-+-------------------+      stdout / stderr encrypted & streamed back    +--------------------+
-```
+<!-- SSH Cryptographic Protocol and Tunnel Architecture Schematic -->
+<svg viewBox="0 0 780 250" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-blue-ssh" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-green-ssh" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="780" height="250" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Left: Client Machine -->
+  <g transform="translate(25, 25)">
+    <rect width="220" height="200" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect width="220" height="28" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="110" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">Local SSH Client (Laptop)</text>
+    
+    <text x="16" y="52" font-size="11" font-weight="600" fill="#334155">• Terminal Host (Zsh/Bash)</text>
+    <text x="16" y="74" font-size="11" fill="#475569">• OpenSSH Client process</text>
+    <text x="16" y="96" font-size="11" fill="#475569">• Keystroke capture</text>
+    
+    <rect x="12" y="112" width="196" height="75" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="20" y="130" font-size="10" font-weight="700" fill="#0f172a">Private Key (Confidential):</text>
+    <text x="20" y="146" font-size="9" font-family="monospace" fill="#2563eb">~/.ssh/id_ed25519</text>
+    <text x="20" y="162" font-size="9" fill="#64748b">• Stays on laptop</text>
+    <text x="20" y="176" font-size="9" fill="#64748b">• Signs crypto challenges</text>
+  </g>
+
+  <!-- Middle: Encrypted Network Tunnel -->
+  <g transform="translate(265, 30)">
+    <rect width="250" height="190" rx="8" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="125" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">Encrypted TCP Port 22 Tunnel</text>
+
+    <!-- Top Arrow: Keystrokes -->
+    <path d="M 15 55 L 235 55" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue-ssh)"/>
+    <text x="125" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#2563eb">Keystrokes / Commands Encrypted ➔</text>
+
+    <!-- Middle Cryptographic Badge -->
+    <g transform="translate(20, 75)">
+      <rect width="210" height="48" rx="6" fill="#ffffff" stroke="#c4b5fd"/>
+      <text x="105" y="20" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">Asymmetric Cryptography</text>
+      <text x="105" y="36" text-anchor="middle" font-size="9" fill="#6d28d9">End-to-end AES-256 / ChaCha20 cipher</text>
+    </g>
+
+    <!-- Bottom Arrow: stdout/stderr -->
+    <path d="M 235 155 L 15 155" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green-ssh)"/>
+    <text x="125" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#059669">⬅ stdout / stderr Stream Returned</text>
+  </g>
+
+  <!-- Right: Remote Server -->
+  <g transform="translate(535, 25)">
+    <rect width="220" height="200" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="220" height="28" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="110" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#047857">Remote Server (Headless)</text>
+    
+    <text x="16" y="52" font-size="11" font-weight="600" fill="#334155">• SSH Daemon (<tspan font-family="monospace">sshd</tspan>)</text>
+    <text x="16" y="74" font-size="11" fill="#475569">• Allocates Pseudo-terminal</text>
+    <text x="16" y="96" font-size="11" fill="#475569">• Executes commands on CPU</text>
+    
+    <rect x="12" y="112" width="196" height="75" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="20" y="130" font-size="10" font-weight="700" fill="#0f172a">Public Key (Authorized):</text>
+    <text x="20" y="146" font-size="9" font-family="monospace" fill="#047857">~/.ssh/authorized_keys</text>
+    <text x="20" y="162" font-size="9" fill="#64748b">• Deployed to server</text>
+    <text x="20" y="176" font-size="9" fill="#64748b">• Validates client signatures</text>
+  </g>
+</svg>
 
 ### What SSH Does Under the Hood
 1. **Encrypted Tunnel**: The **SSH (Secure Shell)** protocol establishes an encrypted, authenticated connection over TCP port 22 between your local **SSH Client** and the remote machine's background service (**`sshd`** - SSH daemon).
@@ -104,29 +233,97 @@ Every command you run directly in an SSH terminal is a child process of that spe
 * The remote operating system detects the severed connection and sends a **`SIGHUP` (Signal Hangup)** signal to all processes attached to that terminal session.
 * The OS immediately terminates your 14-hour sequence alignment or model training job halfway through.
 
-```
-SSH Disconnect Event:
-Laptop Wi-Fi drops ---> SSH Connection Dies ---> Kernel sends SIGHUP ---> Alignment Process Killed!
-```
+<!-- tmux Session Persistence vs SIGHUP Failure Schematic -->
+<svg viewBox="0 0 780 300" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-red-tmux" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-green-tmux" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="780" height="300" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Top: The Failure Mode (Raw SSH Session) -->
+  <g transform="translate(25, 18)">
+    <rect width="730" height="118" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="1.5"/>
+    <rect width="730" height="24" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="365" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Failure Mode: Raw SSH Session (No Terminal Multiplexer)</text>
+
+    <g transform="translate(15, 36)">
+      <!-- Step 1 -->
+      <rect x="0" y="0" width="150" height="64" rx="5" fill="#fef2f2" stroke="#fca5a5"/>
+      <text x="75" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Direct SSH Process</text>
+      <text x="75" y="44" text-anchor="middle" font-size="9" fill="#7f1d1d">Job tied to TCP pipe</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 155 32 L 180 32" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red-tmux)"/>
+
+      <!-- Step 2 -->
+      <rect x="185" y="0" width="155" height="64" rx="5" fill="#fee2e2" stroke="#f87171"/>
+      <text x="262" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Wi-Fi Drops / Sleep</text>
+      <text x="262" y="44" text-anchor="middle" font-size="9" fill="#7f1d1d">SSH connection dies</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 345 32 L 370 32" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red-tmux)"/>
+
+      <!-- Step 3 -->
+      <rect x="375" y="0" width="155" height="64" rx="5" fill="#fee2e2" stroke="#f87171"/>
+      <text x="452" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Kernel Emits SIGHUP</text>
+      <text x="452" y="44" text-anchor="middle" font-size="9" fill="#7f1d1d">Signal 1: Terminal Hangup</text>
+
+      <!-- Arrow 3 -->
+      <path d="M 535 32 L 560 32" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red-tmux)"/>
+
+      <!-- Step 4 -->
+      <rect x="565" y="0" width="135" height="64" rx="5" fill="#dc2626"/>
+      <text x="632" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Process Killed!</text>
+      <text x="632" y="46" text-anchor="middle" font-size="9" fill="#fecaca">14h alignment lost</text>
+    </g>
+  </g>
+
+  <!-- Bottom: The Solution (tmux Persistence) -->
+  <g transform="translate(25, 148)">
+    <rect width="730" height="135" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="730" height="24" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="365" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">The Solution: tmux Background Server Daemon</text>
+
+    <g transform="translate(15, 34)">
+      <!-- Box 1: Laptop Day 1 -->
+      <rect x="0" y="0" width="150" height="82" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="75" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Day 1: Start Session</text>
+      <text x="75" y="40" text-anchor="middle" font-size="9" font-family="monospace" fill="#065f46">$ tmux new -s align</text>
+      <text x="75" y="56" text-anchor="middle" font-size="9" fill="#15803d">Launch alignment job</text>
+      <text x="75" y="70" text-anchor="middle" font-size="9" font-weight="600" fill="#166534">Detach (Ctrl+B, D)</text>
+
+      <!-- Arrow to Server Daemon -->
+      <path d="M 155 41 L 180 41" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green-tmux)"/>
+
+      <!-- Box 2: tmux Server Daemon on Remote Machine -->
+      <rect x="185" y="0" width="345" height="82" rx="5" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+      <text x="357" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">tmux Remote Server Daemon (Persistent)</text>
+      <text x="357" y="42" text-anchor="middle" font-size="10" fill="#065f46">Allocates isolated pseudo-terminal (PTY) independent of SSH</text>
+      <rect x="200" y="52" width="315" height="22" rx="4" fill="#d1fae5"/>
+      <text x="357" y="67" text-anchor="middle" font-size="10" font-weight="600" fill="#047857">Job runs 24/7 continuously even if Wi-Fi drops or laptop sleeps</text>
+
+      <!-- Arrow to Day 2 Reattach -->
+      <path d="M 535 41 L 560 41" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green-tmux)"/>
+
+      <!-- Box 3: Laptop Day 2 -->
+      <rect x="565" y="0" width="135" height="82" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="632" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Day 2: Reattach</text>
+      <text x="632" y="40" text-anchor="middle" font-size="9" font-family="monospace" fill="#065f46">$ tmux attach -t align</text>
+      <text x="632" y="58" text-anchor="middle" font-size="9" fill="#15803d">Terminal state restored</text>
+      <text x="632" y="72" text-anchor="middle" font-size="9" font-weight="700" fill="#047857">✓ 100% Completed</text>
+    </g>
+  </g>
+</svg>
 
 ### The Solution: `tmux` (Terminal Multiplexer)
 **`tmux`** runs a persistent server daemon *on the remote machine itself*, detaching your programs from the fragile SSH connection.
-
-```
-+-----------------------------------------------------------------------+
-| Remote Server                                                         |
-|                                                                       |
-|  [tmux Background Daemon]                                             |
-|     |                                                                 |
-|     +---> [Session: 'alignment'] -> Running bwa mem (Hours uninterrupted)|
-|                                                                       |
-+-----------------------------------------------------------------------+
-       ^                                                 ^
-       | Connected via SSH                               | Reconnected next day
-+--------------+                                  +--------------+
-| Laptop Day 1 |                                  | Laptop Day 2 |
-+--------------+                                  +--------------+
-```
 
 ### Essential `tmux` Workflow
 1. **Start a named session**:
@@ -190,21 +387,99 @@ source ~/.bashrc
 
 On a standalone server, you can run commands directly on the terminal. However, an institutional **HPC cluster** is shared among hundreds of researchers simultaneously.
 
-```
-                                [ Institutional HPC Cluster ]
-                                              |
-                   +--------------------------+--------------------------+
-                   |                                                     |
-          [ Login / Head Node ]                                [ Compute Nodes ]
-          - Shared entry point                                 - 50 to 1,000+ nodes
-          - Light tasks ONLY (editing, git, queuing)           - Massive CPU / RAM / GPUs
-          - NO heavy computation allowed                       - Isolated job execution
-                   |                                                     ^
-                   | Submits Batch Script                                |
-                   v                                                     |
-          [ Resource Scheduler ] ----------------------------------------+
-          (SLURM / PBS)          Allocates matched cores & RAM when free
-```
+<!-- HPC Cluster Topology and Batch Scheduler Schematic -->
+<svg viewBox="0 0 780 300" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px; display: block; margin: 1.5rem auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrow-purple-slurm" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed" />
+    </marker>
+    <marker id="arrow-green-slurm" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="780" height="300" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Left: User & Login Node -->
+  <g transform="translate(25, 20)">
+    <rect width="220" height="260" rx="8" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+    <rect width="220" height="28" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="110" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">Login Node (Head Node)</text>
+
+    <text x="14" y="54" font-size="11" font-weight="600" fill="#334155">• Shared Entry Gateway</text>
+    <text x="14" y="74" font-size="11" fill="#475569">• Light tasks ONLY</text>
+    <text x="14" y="94" font-size="11" fill="#475569">• File editing (<tspan font-family="monospace">vim</tspan>, VS Code)</text>
+    <text x="14" y="114" font-size="11" fill="#475569">• Git sync &amp; script preparation</text>
+    <text x="14" y="134" font-size="11" font-family="monospace" fill="#7c3aed">• sbatch submit_job.sh</text>
+
+    <rect x="10" y="152" width="200" height="96" rx="5" fill="#fef2f2" stroke="#fca5a5"/>
+    <text x="100" y="172" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">⚠️ STRICT RULE</text>
+    <text x="100" y="190" text-anchor="middle" font-size="10" fill="#b91c1c">NO heavy computation here!</text>
+    <text x="100" y="206" text-anchor="middle" font-size="9" fill="#7f1d1d">Heavy jobs freeze the node for</text>
+    <text x="100" y="220" text-anchor="middle" font-size="9" fill="#7f1d1d">all researchers &amp; get killed.</text>
+  </g>
+
+  <!-- Middle: Resource Scheduler (SLURM / PBS) -->
+  <g transform="translate(270, 20)">
+    <!-- Arrow from Login Node to SLURM -->
+    <path d="M -25 80 L 0 80" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow-purple-slurm)"/>
+
+    <rect width="210" height="260" rx="8" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect width="210" height="28" rx="8" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="105" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">Scheduler (SLURM / PBS)</text>
+
+    <text x="14" y="54" font-size="11" font-weight="700" fill="#4338ca">Queue &amp; Allocator</text>
+    <text x="14" y="74" font-size="10" fill="#334155">1. Inspects job requirements:</text>
+    <text x="24" y="90" font-size="10" font-family="monospace" fill="#6d28d9">--cpus=16, --mem=64G</text>
+    
+    <text x="14" y="114" font-size="10" fill="#334155">2. Evaluates Priority:</text>
+    <text x="24" y="130" font-size="10" fill="#475569">• Fair-share policy</text>
+    <text x="24" y="146" font-size="10" fill="#475569">• Partition wait times</text>
+
+    <text x="14" y="172" font-size="10" fill="#334155">3. Dispatches job to</text>
+    <text x="24" y="188" font-size="10" fill="#334155">matched worker node</text>
+
+    <rect x="10" y="206" width="190" height="42" rx="4" fill="#ede9fe"/>
+    <text x="105" y="224" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">Resource Isolation</text>
+    <text x="105" y="238" text-anchor="middle" font-size="9" fill="#6d28d9">Enforces memory &amp; CPU limits</text>
+  </g>
+
+  <!-- Right: Compute Nodes Pool -->
+  <g transform="translate(505, 20)">
+    <!-- Arrow from SLURM to Compute Pool -->
+    <path d="M -25 80 L 0 80" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-green-slurm)"/>
+
+    <rect width="250" height="260" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="250" height="28" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="125" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#047857">Compute Nodes Pool (50–1,000+)</text>
+
+    <!-- Node 1 -->
+    <g transform="translate(12, 38)">
+      <rect width="226" height="58" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="10" y="18" font-size="11" font-weight="700" fill="#166534">Compute Node 01 [Executing]</text>
+      <text x="10" y="34" font-size="10" fill="#15803d">• Running: <tspan font-family="monospace">bwa mem -t 16</tspan></text>
+      <text x="10" y="48" font-size="9" fill="#64748b">• Allocated: 16 Cores, 64 GB RAM</text>
+    </g>
+
+    <!-- Node 2 -->
+    <g transform="translate(12, 102)">
+      <rect width="226" height="58" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+      <text x="10" y="18" font-size="11" font-weight="700" fill="#166534">Compute Node 02 [Executing]</text>
+      <text x="10" y="34" font-size="10" fill="#15803d">• Running: AlphaFold3 Prediction</text>
+      <text x="10" y="48" font-size="9" fill="#64748b">• Allocated: 4× H100 GPUs, 256 GB RAM</text>
+    </g>
+
+    <!-- Shared Storage Bar -->
+    <g transform="translate(12, 168)">
+      <rect width="226" height="80" rx="5" fill="#eff6ff" stroke="#93c5fd"/>
+      <text x="113" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Shared Cluster Filesystem</text>
+      <text x="113" y="38" text-anchor="middle" font-size="10" fill="#1d4ed8">/scratch, /home, /data</text>
+      <text x="113" y="56" text-anchor="middle" font-size="9" fill="#64748b">Unified high-speed parallel access</text>
+      <text x="113" y="70" text-anchor="middle" font-size="9" fill="#64748b">across all compute nodes</text>
+    </g>
+  </g>
+</svg>
 
 ### Cluster Node Specialization
 In cluster computing, a **node** is an individual physical computer (or distinct virtual machine) connected to the shared high-speed network. An HPC cluster organizes its nodes into specialized functional roles:
